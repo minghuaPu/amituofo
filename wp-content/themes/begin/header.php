@@ -36,7 +36,7 @@
 	?>
 	</div>
 	<div class="daohang">
-           <a href="/" style="float:left;font-size:18px;color:yellow;margin-left:225px;margin-top:8px;">首页</a>
+           <a href="/" class="shouye">首页</a>
 		  <?php wp_nav_menu(10); ?>
 		
 	</div>
