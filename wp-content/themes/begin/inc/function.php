@@ -110,6 +110,20 @@ if (function_exists('register_sidebar')){
 		'before_title'  => '<h3 class="widget-title"><span class="s-icon"></span>',
 		'after_title'   => '</h3>',
 	) );
+register_sidebar( array(
+		'name'          => '第一屏右边',
+		'id'            => 'first-right',
+		'description'   => '显示在幻灯片右边',
+		'before_widget' => '',
+		'after_widget'  => '',
+		'before_title'  => '<div class="fjzx_icon">
+						<img src="./wp-content/themes/begin/img/fjw/icon.jpg">
+						<span class="fjga_title">',
+		'after_title'   => '</span>
+					</div>',
+	) );
+
+
 
 	register_sidebar( array(
 		'name'          => '菜单页面',

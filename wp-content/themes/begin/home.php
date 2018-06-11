@@ -2,7 +2,7 @@
 
 	<?php get_header(); 
 	?>
-<style>body{background:url('./wp-content/themes/begin/img/xy_bj.jpg')}
+<style>
 	.main_box > div {background-color:#fff;width:1120px !important;padding:10px 0 0 10px;}
 </style>
 	<div class="main_box">
@@ -12,11 +12,14 @@
 				<div class="left_top_box">
 					<?php get_template_part('template/slider'); ?>
 				</div>
-				<div class="right_top_box">
-					<div class="fjzx_icon">
-						<img src="./wp-content/themes/begin/img/fjw/icon.jpg">
-						<span class="fjga_title">佛教公案</span>
-					</div>
+ <div class="right_top_box">
+		<?php if ( ! dynamic_sidebar( 'first-right' ) ) : ?>
+				 
+		<?php endif; ?>
+	 
+
+				
+				 
  <!-- 遍历佛教公案开始 -->
                     <?php $list_num=array(  
                          'showposts'=>8,
