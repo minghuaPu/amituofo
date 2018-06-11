@@ -1,6 +1,154 @@
 <?php
 // 小工具
 if (function_exists('register_sidebar')){
+
+		register_sidebar( array(
+		'name'          => '第一屏幻灯片右边',
+		'id'            => 'first_hdp_right',
+		'description'   => '显示在第一屏幻灯片右边',
+		'before_widget' => '',
+		'after_widget'  => '',
+		'before_title'  => '<div class="fjzx_icon">
+						<img id="one_img" src="./wp-content/themes/begin/img/fjw/icon.jpg">
+						<span class="ziti"  id="one_sp">',
+		'after_title'   => '</span>
+					</div>',
+	) );
+ 		register_sidebar( array(
+		'name'          => '第一屏幻灯片下边图片',
+		'id'            => 'sidebar-picture',
+		'description'   => '显示图片',
+		'before_widget' => '',
+		'after_widget'  => '',
+		'before_title'  => '<div class="fjzx_icon">
+						<img src="./wp-content/themes/begin/img/fjw/icon.jpg">
+						<span class="fjga_title ziti">',
+		'after_title'   => '</span>
+					</div>',
+	) );
+ 	 	register_sidebar( array(
+		'name'          => '第二屏和剩下所有',
+		'id'            => 'sb_two_top',
+		'description'   => '显示第二屏和剩下所有',
+		'before_widget' => '',
+		'after_widget'  => '',
+		'before_title'  => '<div class="fjzx_icon two_top">
+						<img id="two_image" src="./wp-content/themes/begin/img/fjw/icon.jpg" >
+						<span class="fjga_title ziti two_zitizuo">',
+		'after_title'   => '</span>
+					',
+	) );
+  	 	register_sidebar( array(
+		'name'          => '第三屏',
+		'id'            => 'sb_three',
+		'description'   => '显示第三屏',
+		'before_widget' => '',
+		'after_widget'  => '',
+		'before_title'  => '<div class="tb_one">
+				            <div class="left_title three_l_t">
+				            <div class="fjzx_ic</div>on tb_img">
+						    <img src="./wp-content/themes/begin/img/fjw/icon.jpg" >
+						    <span class="fjga_title redcolor ziti">',
+		'after_title'   => '</span>
+					',
+	) );
+   	 	register_sidebar( array(
+		'name'          => '第四屏',
+		'id'            => 'sb_four',
+		'description'   => '显示第四屏',
+		'before_widget' => '',
+		'after_widget'  => '',
+		'before_title'  => '<div class="fob_le">
+				            <div class="left_title">
+				            <div class="fjzx_icon tb_img">
+						    <img id="fo_img" src="./wp-content/themes/begin/img/fjw/icon.jpg" >
+						    <span class="fjga_title ziti">',
+		'after_title'   => '</span>
+					',
+	) );
+    	register_sidebar( array(
+		'name'          => '第五屏',
+		'id'            => 'sb_five',
+		'description'   => '显示第五屏',
+		'before_widget' => '',
+		'after_widget'  => '',
+		'before_title'  => '<div class="fi_left">
+				            <div class="left_title">
+				            <div class="fjzx_icon">
+						    <img class="fi_le_img" src="./wp-content/themes/begin/img/fjw/icon.jpg" >
+						    <span class="fjga_title ziti">',
+		'after_title'   => '</span>
+					',
+	) );
+    	register_sidebar( array(
+		'name'          => '第六屏',
+		'id'            => 'sb_six',
+		'description'   => '显示第六屏',
+		'before_widget' => '',
+		'after_widget'  => '',
+		'before_title'  => '<div class="sb_one">
+				            <div class="left_title">
+				            <div class="fjzx_icon">
+						    <img class="sb_img" src="./wp-content/themes/begin/img/fjw/icon.jpg" >
+						    <span class="fjga_title ziti">',
+		'after_title'   => '</span>
+					',
+	) );
+    	register_sidebar( array(
+		'name'          => '第七屏',
+		'id'            => 'sb_seven',
+		'description'   => '显示第七屏',
+		'before_widget' => '',
+		'after_widget'  => '',
+		'before_title'  => '<div class="evl_one">
+				            <div class="left_title">
+				            <div class="fjzx_icon">
+						    <img class="evl_img" src="./wp-content/themes/begin/img/fjw/icon.jpg" >
+						    <span class="fjga_title ziti">',
+		'after_title'   => '</span>
+					',
+	) );
+    	register_sidebar( array(
+		'name'          => '第八屏',
+		'id'            => 'sb_eight',
+		'description'   => '显示第八屏',
+		'before_widget' => '',
+		'after_widget'  => '',
+		'before_title'  => '<div class="eb_le fs">
+				            <div class="left_title">
+				            <div>
+						    <img class="eb_le_img" src="./wp-content/themes/begin/img/fjw/icon.jpg" >
+						    <span class="eb_le_span ziti">',
+		'after_title'   => '</span>
+					',
+	) );
+    	register_sidebar( array(
+		'name'          => '第九屏',
+		'id'            => 'sb_nine',
+		'description'   => '显示第九屏',
+		'before_widget' => '',
+		'after_widget'  => '',
+		'before_title'  => '<div class="left_title fj_gg">
+				            <div class="fjgc_icon" ">
+						    <img id="two_img" src="./wp-content/themes/begin/img/fjw/icon.jpg" >
+						    <span id="two_sp" class="ziti">',
+		'after_title'   => '</span>
+					</div>',
+	) );
+    	register_sidebar( array(
+		'name'          => '第十屏',
+		'id'            => 'sb_ten',
+		'description'   => '显示第十屏',
+		'before_widget' => '',
+		'after_widget'  => '',
+		'before_title'  => '<div class="nb_le">
+				            <div class="left_title">
+					        <div class="fjgc_icon">
+						    <img class="nb_img" src="./wp-content/themes/begin/img/fjw/icon.jpg" >
+						    <span id="ten_sp" class="fjgc_nav_bar ziti">',
+		'after_title'   => '</span>
+					</div>',
+	) );
 	register_sidebar( array(
 		'name'          => '博客布局侧边栏',
 		'id'            => 'sidebar-h',

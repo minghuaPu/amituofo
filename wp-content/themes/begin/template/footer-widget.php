@@ -6,7 +6,7 @@
 				<a href="<?php echo admin_url(); ?>widgets.php" target="_blank"></a>
 			</aside>
 		<?php endif; ?>
-		<div class="clear"></div>
+		
 	</div>
 </div>
 <?php } ?>

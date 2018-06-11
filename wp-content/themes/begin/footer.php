@@ -1,5 +1,5 @@
 	</div><!-- .site-content -->
-	<div class="clear"></div>
+	
 	<?php if (zm_get_option('footer_link')) { ?>
 		<?php get_template_part( 'template/footer-links' ); ?>
 	<?php } ?>

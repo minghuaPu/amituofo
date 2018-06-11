@@ -31,7 +31,6 @@ if ( isset($_GET['import']) && !defined('WP_LOAD_IMPORTERS') )
 require_once(dirname(dirname(__FILE__)) . '/wp-load.php');
 
 nocache_headers();
-
 if ( get_option('db_upgraded') ) {
 	flush_rewrite_rules();
 	update_option( 'db_upgraded',  false );
@@ -349,6 +348,7 @@ if ( isset($plugin_page) ) {
 		do_action( 'load-edit-tags.php' );
 	}
 }
+
 
 if ( ! empty( $_REQUEST['action'] ) ) {
 	/**

@@ -8,6 +8,8 @@
 	list-style: none;
 	text-decoration: none;
 }
+.shouye{float:left;font-size:16px;color:yellow!important;margin-left:225px;margin-top:8px;}
+.main_box > div {background-color:#fff;width:1120px !important;padding:10px 10px 0 10px;}
 
 img {
 	width: 100%;
@@ -66,7 +68,7 @@ img {
 .right_top_box {
 	float: right;
 	width: 54%;
-	height: auto;
+	height: 120px;
 }
 
 .fjzx_icon {
@@ -80,7 +82,6 @@ img {
 	position: absolute;
 	left: 0;
 	top: 0;
-	width:7.5%;
 }
 
 .fjzx_icon>span { 
@@ -89,10 +90,12 @@ img {
 	margin-top: 0.05rem;
 	color: #960100;
 }
-
+.fjzx_icon>span a{
+	color: #960100;
+}
 .right_top_box>.top_box {
 	width: 100%;
-	margin-bottom: -0.15rem;
+	margin-bottom: 10px;
 	overflow: hidden;
 }
 
@@ -138,13 +141,14 @@ img {
 }
 
 .right_top_box>.bottom_box>ul {
-	width: 100%; 
+	width: 95%; 
 }
 
 .right_top_box>.bottom_box span {
 	float: right;
 }
-
+.two_top{  width: 75%;  float: left;border-bottom: 1px solid grey;}
+.two_top img{width:40px;height:25px;}
 /* 佛教资讯底部容器 */
 .fjzx_box>.fjzx_bottom_box {
 	width: 100%;
@@ -154,7 +158,7 @@ img {
 .fjzx_box>.fjzx_bottom_box .img_box {
 	float: left;
 	width: 23%;
-	margin-right: 1.333%;
+	margin-right: 2%;
 }
 .img_box p{
 	padding-top:10px;
@@ -186,7 +190,7 @@ img {
 }
 
 .fjgc_left_box {
-	width: 76%;
+	width: 100%;
 	height: auto;
 	float: left;
 }
@@ -195,9 +199,9 @@ img {
 	width: 100%;
 	height: 25px;
 	overflow: hidden;
-	
-	/* border:1px solid purple; */
-	margin-bottom: 0.08rem;
+}
+.three_l_t {
+	height: 30px !important;
 }
 
 .fjgc_icon {
@@ -206,13 +210,10 @@ img {
 }
 
 .fjgc_icon>img {
-	position: absolute;
-	left: 0;
-	top: 0;
-	width:5%;
+
 }
 
-.fjgc_icon>span { 
+.fjgc_icon span { 
 	float: left;
 	margin-left: 0.6rem;
 	margin-top: 0.03rem;
@@ -235,8 +236,7 @@ img {
 }
 
 .fjgc_left_box>.left_top_box {
-	width: 100%;
-	height: 2.5rem;
+	width: 75%;
 	overflow: hidden;
 	/* border:1px solid red; */
 	margin-bottom: 0.08rem;
@@ -257,21 +257,259 @@ img {
 	width: 68%;
 }
 
-.fjgc_left_box>.left_top_box>.right_box span {
-	float: right;
-}
+
 
 .fjgc_right_box {
 	float: right;
+    margin-top: -40px;
 	width: 23%;
 	height: 5rem;
 	/* border:1px solid green; */
 	background-color: #f5f0ea;
 }
-
-
+.kaishi_box{
+	margin: 2px;
+}
+.kaishi_box li{
+	  color: #634529; 
+      height: 30px;
+      overflow: hidden;
+}
+.kais_li{
+	color: #634529;
+}
 /* -------------------------------------------------- */
 /* 宗派流源 */
 .zply_box {
 	
+}
+.rli_title{
+	height: 110px; margin-bottom:10px;margin-top:5px;
+}
+.rli_title_a{
+	color: #9a0000; font-weight: bold;
+}
+.rli_title_s{
+	border-bottom: 1px dashed #b9aca3;color: #777777;padding-bottom:10px; 
+}
+.rli_title_s p{
+	margin-left: 20px;
+}
+.flb_all{
+	width:100%;
+	height: auto;
+}
+.three_box{
+	width: 100%; height: auto; overflow: hidden;  margin: 0 auto;
+}
+.tb_one{
+	float: left; width: 75%; 
+}
+.tb_img img{
+	width:40px;height:25px;
+}
+.tb_right{
+	float: right; width: 23%;  height: 400px;margin-top: -27px;
+}
+.tb_bo{
+	float: left; width: 30%; margin-left: 3%;
+}
+.four_box{
+	width: 100%; height: 450px; overflow: hidden;  margin: 0 auto; margin-top: 20px;
+}
+.fob_list{
+	float: left; width: 22%; margin-right: 3%;
+}
+.fob_le{
+	float: left; width: 76%;
+}
+.fob_img{
+	position: relative;left:-100px;width:40px;height:25px;
+}
+.fob_h3{
+	display:block;text-align:center;
+}
+.fo_left{
+	float: right; width: 23%;  height: 400px;margin-top: -27px;
+}
+.fo_lf_ul{
+	list-style-type:disc;margin-left: 5px;
+}
+.fo_lf_ul li{
+	height:30px;overflow: hidden;list-style-type:disc;
+}
+.five_box{
+	width: 100%; height: 450px; overflow: hidden;  margin: 0 auto;margin-top: 20px;
+}
+.fi_right{
+	float: right; width: 23%;  height: 400px;margin-top: 5px;
+}
+.fi_ri_ul{
+	list-style-type:disc;margin-left: 5px;
+}
+.fi_ri_li{
+	height:30px;overflow: hidden;list-style-type:disc;
+}
+.fi_left{
+	float: left; width: 76%; 
+}
+.fi_le_img{
+	position: relative;left:-100px;top:-5px;width:40px;height:25px;
+}
+.six_box{
+	width: 100%; overflow: hidden;margin: 0 auto; pdding-top:10px; 
+}
+.sb_one{
+	float: left; width: 76%; 
+}
+.sb_img{
+	position: relative;left:-100px;width:40px;height:25px;
+}
+.center_one{
+	margin-bottom: 30px;
+}
+.sb_li{
+	margin-top:20px; 
+}
+.sb_ul{
+	margin-top:20px;margin-left:20px;
+}
+.si_le{	
+	float: right; width: 23%;  height: 400px;margin-top:-28px;
+}
+.si_le_ul{
+	list-style-type:disc;margin-left: 5px;
+}
+.sb_span{
+	float:right;
+}
+.si_le_li{
+	height:30px;overflow: hidden;list-style-type:disc;
+}
+.evl_box{
+	width: 100%;height: auto;overflow: hidden;margin: 0 auto; 
+}
+.evl_one{
+	float: left; width: 76%;
+}
+.evl_img{
+	position: relative;left:-100px;width:40px;height:25px;
+}
+.evl_sp{
+	width: 120px; margin-left: 10px;
+}
+.evl_spi{
+	text-align:center;
+}
+.evl_right{
+	float: right; width: 22%;  height: 400px; margin-top: -27px;
+}
+.evl_right_ul{
+	list-style-type:disc;margin-left: 5px;
+}
+.evl_right_li{
+	height:30px;overflow: hidden;list-style-type:disc;
+}
+.eight_box{
+	width: 100%;height: auto;overflow: hidden;margin: 0 auto;
+}
+.eb_le{
+	width:45%;margin-left:15px;    height: auto;
+}
+.eb_le_img{
+	position: relative;left:0px;width:40px;height:25px;
+}
+.eb_le_span{
+	position: relative;top:-6px;color: #960100;
+}
+.eight_right{
+	margin-left:10px;width:45%;
+}
+.ei_ri_img{
+	position: relative;left:0px;width:40px;height:25px;
+}
+.ei_span{
+	position:relative;top:-25px;
+}
+.sushi{
+	margin-top:20px;
+}
+.nine_box{
+	width: 100%; height: auto; overflow: hidden; margin: 0 auto;
+}
+.nb_le{
+	float: left; width: 76%;
+}
+.nb_img{
+	float: left;width:40px;height:25px;
+}
+.nb_d{
+	width: 200px; margin-left: 10px;
+}
+.nb_d1{
+	text-align:center;
+}
+.nb_d1 a{
+	width:130px;height:30px;display: block;overflow: hidden;margin: 5px auto;
+}
+.nb_right{
+	float: right; width: 23%;  height: 400px;margin-top: 5px;
+}
+.nb_li{
+	height:30px;overflow: hidden;list-style-type:none!important;width:110px;
+}
+.two_top{
+	width:75%;
+}
+.fb_le_one{
+	float: left; width: 76%; 
+}
+.fb_le_t{
+	position: relative;left:-100px;width:40px;height:25px;
+}
+.fs_gg{
+	margin-top:20px;
+}
+.fj_gg{
+		clear:both;    height: 28px!important;s
+}
+.fj_img{
+	position: relative;left:-100px;width:40px;height:25px;
+}
+.fj_sp{
+	margin-left:50px;
+}
+.fjc_sp{
+	float:right;
+}
+.tuju{
+	margin-top: 10px;
+}
+#fo_img{
+	position: none !important;
+}
+#ten_sp{
+	margin-left: 5px;
+}
+.ten_ul{
+	width:100%;
+}
+.ten_ul li{
+   width:209px;
+   margin-left: 0px!important;
+
+}
+.ten_ul li img{
+   width:200px!important;
+   height: 145px!important;
+}
+.ziti{
+	font-weight: bold;
+	font-size: 16px;
+}
+.two_zitizuo{
+	margin-left: 43px!important;
+}
+#two_image{
+	position: none!important;
 }

@@ -26,7 +26,7 @@ class new_cat extends WP_Widget {
 		echo $before_widget;
 		if ($newWindow) $newWindow = "target='_blank'";
 			if(!$hideTitle && $title) {
-				if($titleUrl) $title = "<a href='$titleUrl' $newWindow>$title<span class='more-i'><span></span><span></span><span></span></span></a>";
+				if($titleUrl) $title = "<a href='$titleUrl' $newWindow>$title<span class='more-i'></a>";
 			}
 		if ( ! empty( $title ) )
 		echo $before_title . $title . $after_title; 
@@ -132,7 +132,7 @@ class img_cat extends WP_Widget {
 		echo $before_widget;
 		if ($newWindow) $newWindow = "target='_blank'";
 			if(!$hideTitle && $title) {
-				if($titleUrl) $title = "<a href='$titleUrl' $newWindow>$title<span class='more-i'><span></span><span></span><span></span></span></a>";
+				if($titleUrl) $title = "<a href='$titleUrl' $newWindow>$title<span class='more-i'></a>";
 			}
 		if ( ! empty( $title ) )
 		echo $before_title . $title . $after_title; 
@@ -1258,7 +1258,7 @@ class img_widget extends WP_Widget {
 		echo $before_widget;
 		if ($newWindow) $newWindow = "target='_blank'";
 			if(!$hideTitle && $title) {
-				if($titleUrl) $title = "<a href='$titleUrl' $newWindow>$title<span class='more-i'><span></span><span></span><span></span></span></a>";
+				if($titleUrl) $title = "<a href='$titleUrl' $newWindow>$title<span class='more-i'></a>";
 			}
 		if ( ! empty( $title ) )
 		echo $before_title . $title . $after_title;
@@ -1364,7 +1364,7 @@ class video_widget extends WP_Widget {
 		echo $before_widget;
 		if ($newWindow) $newWindow = "target='_blank'";
 			if(!$hideTitle && $title) {
-				if($titleUrl) $title = "<a href='$titleUrl' $newWindow>$title<span class='more-i'><span></span><span></span><span></span></span></a>";
+				if($titleUrl) $title = "<a href='$titleUrl' $newWindow>$title<span class='more-i'></a>";
 			}
 		if ( ! empty( $title ) )
 		echo $before_title . $title . $after_title;
@@ -1470,7 +1470,7 @@ class tao_widget extends WP_Widget {
 		echo $before_widget;
 		if ($newWindow) $newWindow = "target='_blank'";
 			if(!$hideTitle && $title) {
-				if($titleUrl) $title = "<a href='$titleUrl' $newWindow>$title<span class='more-i'><span></span><span></span><span></span></span></a>";
+				if($titleUrl) $title = "<a href='$titleUrl' $newWindow>$title<span class='more-i'></a>";
 			}
 		if ( ! empty( $title ) )
 		echo $before_title . $title . $after_title;
@@ -3923,7 +3923,7 @@ class show_widget extends WP_Widget {
 		echo $before_widget;
 		if ($newWindow) $newWindow = "target='_blank'";
 			if(!$hideTitle && $title) {
-				if($titleUrl) $title = "<a href='$titleUrl' $newWindow>$title<span class='more-i'><span></span><span></span><span></span></span></a>";
+				if($titleUrl) $title = "<a href='$titleUrl' $newWindow>$title<span class='more-i'></a>";
 			}
 		if ( ! empty( $title ) )
 		echo $before_title . $title . $after_title;
@@ -4579,7 +4579,7 @@ class t_img_cat extends WP_Widget {
 		echo $before_widget;
 		if ($newWindow) $newWindow = "target='_blank'";
 			if(!$hideTitle && $title) {
-				if($titleUrl) $title = "<a href='$titleUrl' $newWindow>$title<span class='more-i'><span></span><span></span><span></span></span></a>";
+				if($titleUrl) $title = "<a href='$titleUrl' $newWindow>$title<span class='more-i'></a>";
 			}
 		if ( ! empty( $title ) )
 		echo $before_title . $title . $after_title; 
@@ -4649,3 +4649,2342 @@ function form( $instance ) {
 }
 
 add_action( 'widgets_init', create_function( '', 'register_widget( "t_img_cat" );' ) );
+
+
+
+
+
+// 第一屏幻灯片右边数据模块
+class f_silde_r extends WP_Widget {
+	public function __construct() {
+		$widget_ops = array(
+			'classname' => 'f_silde_r',
+			'description' => __( '显示全部分类或某个分类的文章' ),
+			'customize_selective_refresh' => true,
+		);
+		parent::__construct('f_silde_r', '第一屏幻灯片右边数据模块', $widget_ops);
+	}
+
+	function widget( $args, $instance ) {
+		extract( $args );
+		$instance = wp_parse_args( (array) $instance, $defaults );
+		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title'], $instance);
+		$titleUrl = empty($instance['titleUrl']) ? '' : $instance['titleUrl'];
+		$newWindow = !empty($instance['newWindow']) ? true : false;
+		echo $before_widget;
+		if ($newWindow) $newWindow = "target='_blank'";
+			if(!$hideTitle && $title) {
+				if($titleUrl) $title = "<a href='$titleUrl' $newWindow>$title<span class='more-i'></a>";
+			}
+		if ( ! empty( $title ) )
+		echo $before_title . $title . $after_title; 
+?>
+					<div class="top_box">
+<?php
+ $q = 'showposts=1&ignore_sticky_posts=1'; 
+ if (!empty($instance['cat'])) $q .= '&category__and='.$instance['cat']; 
+ query_posts($q); 
+ while (have_posts()) : the_post(); ?>
+						<div class="left_box">
+							<?php img_thumbnail();?>
+						</div>
+						<div class="right_box hid">					                                                  
+                             <ul>
+                                 <li>
+                                 	<a  class="subtitle"  href="<?php the_permalink()?>">
+                                    <?php the_title();?></a>
+								</li>
+		<?php endwhile; ?>
+
+		<?php 
+		$q = 'showposts='.$instance['numposts'].'&ignore_sticky_posts=1&offset=1'; 
+		if (!empty($instance['cat'])) $q .= '&category__and='.$instance['cat']; 
+		query_posts($q); 
+		while (have_posts()) : the_post(); ?>
+				<li><?php the_title( sprintf( '<a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a>' ); ?></li>
+				
+		<?php endwhile; ?>
+		<?php wp_reset_query(); ?>
+							</ul>						                           			
+                         </div>	
+					</div>
+<?php
+	echo $after_widget;
+}
+
+function update( $new_instance, $old_instance ) {
+
+	if($new_instance['numposts']>5){$new_instance['numposts']=5;}else{}
+	$instance = $old_instance;
+	$instance = array();
+	$instance['title'] = strip_tags($new_instance['title']);
+	$instance['titleUrl'] = strip_tags($new_instance['titleUrl']);
+	$instance['hideTitle'] = isset($new_instance['hideTitle']);
+	$instance['newWindow'] = isset($new_instance['newWindow']);
+	$instance['numposts'] = $new_instance['numposts'];
+	$instance['cat'] = $new_instance['cat'];
+	return $instance;
+}
+
+function form( $instance ) {
+	$instance = wp_parse_args( (array) $instance, $defaults );
+	$instance = wp_parse_args( (array) $instance, array( 
+		'title' => '分类模块',
+		'titleUrl' => '',
+		'numposts'=>'5',
+        'newWindow'=>'',
+		'cat' => 0));
+		$titleUrl = $instance['titleUrl'];
+		 ?> 
+
+		<p>
+			<label for="<?php echo $this->get_field_id('title'); ?>">标题：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $instance['title']; ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('titleUrl'); ?>">标题链接：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('titleUrl'); ?>" name="<?php echo $this->get_field_name('titleUrl'); ?>" type="text" value="<?php echo $titleUrl; ?>" />
+		</p>
+		<p>
+			<input type="checkbox" id="<?php echo $this->get_field_id('newWindow'); ?>" name="<?php echo $this->get_field_name('newWindow'); ?>" <?php checked(isset($instance['newWindow']) ? $instance['newWindow'] : 0); ?> />
+			<label for="<?php echo $this->get_field_id('newWindow'); ?>">在新窗口打开标题链接</label>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('numposts'); ?>">显示篇数(注意最多六篇)：</label> 
+			<input id="<?php echo $this->get_field_id('numposts'); ?>" name="<?php echo $this->get_field_name('numposts'); ?>" type="text" value="<?php echo $instance['numposts']; ?>" size="3" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('cat'); ?>">选择分类：
+			<?php wp_dropdown_categories(array('name' => $this->get_field_name('cat'), 'show_option_all' => 全部分类, 'hide_empty'=>0, 'hierarchical'=>1, 'selected'=>$instance['cat'])); ?></label>
+		</p>
+
+<?php }
+}
+add_action( 'widgets_init', create_function( '', 'register_widget( "f_silde_r" );' ) );
+
+
+// 纯标题数据
+class cbt_data extends WP_Widget {
+	public function __construct() {
+		$widget_ops = array(
+			'classname' => 'cbt_data',
+			'description' => __( '显示全部分类或某个分类的文章' ),
+			'customize_selective_refresh' => true,
+		);
+		parent::__construct('cbt_data', '纯标题数据', $widget_ops);
+	}
+
+	function widget( $args, $instance ) {
+		extract( $args );
+		$instance = wp_parse_args( (array) $instance, $defaults );
+		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title'], $instance);
+		$titleUrl = empty($instance['titleUrl']) ? '' : $instance['titleUrl'];
+		$newWindow = !empty($instance['newWindow']) ? true : false;
+		echo $before_widget;
+		if ($newWindow) $newWindow = "target='_blank'";
+			if(!$hideTitle && $title) {
+				if($titleUrl) $title = "<a href='$titleUrl' $newWindow>$title<span class='more-i'></a>";
+			}
+		if ( ! empty( $title ) )
+		echo $before_title . $title . $after_title; 
+?>
+
+					<div class="bottom_box boxli">
+						<ul>
+		<?php 
+		$q = 'showposts='.$instance['numposts'].'&ignore_sticky_posts=1'; 
+		if (!empty($instance['cat'])) $q .= '&category__and='.$instance['cat'];
+	    query_posts($q); while (have_posts()) : the_post(); ?>
+						<li>
+							<strong class="liststyle">.</strong>		
+							<a href="<?php the_permalink() ?>" class="subtitle_text"><?php the_title();?>|</a><span class="subtitle_text"><?php the_time('m-d')?>&nbsp;&nbsp;</span>
+						</li>
+				
+		<?php endwhile;?>
+		<?php wp_reset_query();?>
+
+ 	</ul>
+	</div>                 
+<?php
+	echo $after_widget;
+}
+
+function update( $new_instance, $old_instance ) {
+	if($new_instance['numposts']>5){$new_instance['numposts']=5;}else{}
+	$instance = $old_instance;
+	$instance = array();
+	$instance['numposts'] = $new_instance['numposts'];
+	$instance['cat'] = $new_instance['cat'];
+	return $instance;
+}
+
+function form( $instance ) {
+	$instance = wp_parse_args( (array) $instance, $defaults );
+	$instance = wp_parse_args( (array) $instance, array( 
+    	'numposts'=>'5',
+		'cat' => 0));
+		 ?> 
+		<p>
+			<label for="<?php echo $this->get_field_id('numposts'); ?>">显示篇数(注意最多5篇)：</label> 
+			<input id="<?php echo $this->get_field_id('numposts'); ?>" name="<?php echo $this->get_field_name('numposts'); ?>" type="text" value="<?php echo $instance['numposts']; ?>" size="3" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('cat'); ?>">选择分类：
+			<?php wp_dropdown_categories(array('name' => $this->get_field_name('cat'), 'show_option_all' => 全部分类, 'hide_empty'=>0, 'hierarchical'=>1, 'selected'=>$instance['cat'])); ?></label>
+		</p>
+
+<?php }
+}
+
+add_action( 'widgets_init', create_function( '', 'register_widget( "cbt_data" );' ) );
+
+
+
+//第一幻灯片下面的图片
+class sidebar_picture extends WP_Widget {
+	public function __construct() {
+		$widget_ops = array(
+			'classname' => 'sidebar_picture',
+			'description' => __( '显示某个分类的图片和标题' ),
+			'customize_selective_refresh' => true,
+		);
+		parent::__construct('sidebar_picture', '纯图片标题', $widget_ops);
+	}
+
+	function widget( $args, $instance ) {
+		extract( $args );
+		$instance = wp_parse_args( (array) $instance, $defaults );
+		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title'], $instance);
+		$titleUrl = empty($instance['titleUrl']) ? '' : $instance['titleUrl'];
+		$newWindow = !empty($instance['newWindow']) ? true : false;
+		echo $before_widget;
+		if ($newWindow) $newWindow = "target='_blank'";
+			if(!$hideTitle && $title) {
+				if($titleUrl) $title = "<a href='$titleUrl' $newWindow>$title<span class='more-i'></a>";
+			}
+		if ( ! empty( $title ) )
+		echo $before_title . $title . $after_title; 
+?>
+
+					<div class="bottom_box boxli">
+						<ul>
+		<?php 
+		$q = 'showposts='.$instance['numposts'].'&ignore_sticky_posts=1&order='.$instance['order'].'&orderby='.$instances['orderby']; 
+		if (!empty($instance['cat'])) $q .= '&category__and='.$instance['cat'];
+	    query_posts($q); while (have_posts()) : the_post(); ?>	
+				<div class="img_box">
+					<a href="<?php the_permalink()?>"><?php img_thumbnail();?></a>
+					<p><a href="<?php the_permalink()?>"><?php the_title();?>   <?php echo $instance['orderby']?></a></p>
+				</div>
+
+		<?php endwhile; ?>
+		<?php wp_reset_query(); ?>
+
+ 	</ul>
+					</div>                 
+<?php
+	echo $after_widget;
+}
+
+function update( $new_instance, $old_instance ) {
+	if($new_instance['numposts']>4){$new_instance['numposts']=4;}else{}
+	$instance = $old_instance;
+	$instance = array();
+	$instance['numposts'] = $new_instance['numposts'];
+	$instance['cat'] = $new_instance['cat'];
+	$instance['order'] = $new_instance['order'];
+	return $instance;
+}
+
+function form( $instance ) {
+	$instance = wp_parse_args( (array) $instance, $defaults );
+	$instance = wp_parse_args( (array) $instance, array( 
+		'numposts' => 4,
+		'order'=>'ASC',
+		'cat' => 22));
+		$order = $instance['order'];
+		 ?> 
+		<p>
+			<label for="<?php echo $this->get_field_id('numposts'); ?>">显示篇数：</label> 
+			<input id="<?php echo $this->get_field_id('numposts'); ?>" name="<?php echo $this->get_field_name('numposts'); ?>" type="text" value="<?php echo $instance['numposts']; ?>" size="3" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('cat'); ?>">选择分类：
+			<?php wp_dropdown_categories(array('name' => $this->get_field_name('cat'), 'show_option_all' => 全部分类, 'hide_empty'=>0, 'hierarchical'=>1, 'selected'=>$instance['cat'])); ?></label>
+		</p>
+	    <p>
+			<input type="radio" id="<?php echo $this->get_field_id('order'); ?>" name="<?php echo $this->get_field_name('order'); ?>" value="DESC" <?php if($instance['order']=="DESC"){ echo 'checked';} ?>   />
+			<label for="<?php echo $this->get_field_id('order'); ?>">降序 <?php echo $instance['order'];?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order'); ?>" name="<?php echo $this->get_field_name('order'); ?>" value="ASC"  <?php if($instance['order']=="ASC"){ echo 'checked';} ?>  />
+			<label for="<?php echo $this->get_field_id('order'); ?>">升序</label>		    
+	    </p>
+
+<?php }
+}
+
+add_action( 'widgets_init', create_function( '', 'register_widget( "sidebar_picture" );' ) );
+
+
+
+//显示第二屏
+class sb_two_top1 extends WP_Widget {
+	public function __construct() {
+		$widget_ops = array(
+			'classname' => 'sb_two_top1',
+			'description' => __( '显示第二屏' ),
+			'customize_selective_refresh' => true,
+		);
+		parent::__construct('sb_two_top1', '第二屏', $widget_ops);
+	}
+	function widget( $args, $instance ) {
+		extract( $args );
+		$instance = wp_parse_args( (array) $instance, $defaults );
+		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title'], $instance);
+		$titleUrl = empty($instance['titleUrl']) ? '' : $instance['titleUrl'];
+		$newWindow = !empty($instance['newWindow']) ? true : false;
+
+		$title1 =  empty($instance['title1']) ? '' : $instance['title1'];
+		$titleUrl1 = empty($instance['titleUrl1']) ? '' : $instance['titleUrl1'];
+		$newWindow1 = !empty($instance['newWindow1']) ? true : false;
+		echo $before_widget;
+		if ($newWindow) $newWindow = "target='_blank'";
+			if(!$hideTitle && $title) {
+				if($titleUrl) $title = "<a href='$titleUrl' $newWindow>$title<span class='more-i'></a>";
+			}
+		if ( ! empty( $title ) )
+		echo $before_title . $title . $after_title; 
+?>      				            
+					<!-- 圣贤德育子类目导航开始 -->		
+					<div class="fjgc_nav_bar">
+						<ul>
+							<li><a href="<?php echo $titleUrl;?>" target='_blank'>更多&gt;&gt;</a></li>
+		                            <?php
+				                 $cat=$instance['cat']	;
+				                 $cats = get_categories(array(
+				               	     'child_of' => $cat,
+					                 'parent' => $cat,
+					                 'hide_empty' => 0
+				                      )); 
+				                 foreach($cats as $the_cat){					 
+						          echo '<li><a href="'.get_category_link($the_cat).'">'.$the_cat->name.'</a></li>';			
+				                 }
+			                 ?>
+<!-- 圣贤德育子类目导航结束 -->			                 
+						</ul>
+					</div>	
+				</div>	
+				<div class="left_top_box">
+					<div class="left_box">
+<!-- 圣贤德育左边图片开始 -->	
+						        <?php 
+		                             $arg = array( 
+		                               
+	                                 'showposts'=>1,
+                                     'cat' =>$instance['cat'],
+                                     );
+                                 query_posts($arg);	  
+                                 if (have_posts()){
+                                 while (have_posts()) { the_post(); ?>
+                                 <?php img_thumbnail();?>
+                                 <?php
+                                 }
+                                 }
+                                 ?>
+<!-- 圣贤德育左边图片结束 -->	                                
+					</div>
+					<div class="right_box rli">
+<!-- 圣贤德育右边列表开始 -->	 
+                     <?php  
+	                     $args = array(
+	                            'ignore_sticky_posts'=>1,
+	                             'showposts'=>3,
+                                 'cat' => $instance['cat']);
+                             query_posts($args);		  
+                        if (have_posts()){
+	                             $n=1;
+                        while (have_posts()) { the_post(); 
+	                           if($n==1){
+                        	?>
+						<div class="rli_title"><p> <a class="rli_title_a" href="<?php the_permalink()?>"><?php the_title()?></a></p><span class="rli_title_s"><?php the_excerpt()?></span>
+						         <?php
+	                                 }else{
+		                         ?>
+						
+							<ul>
+								<li><div class="circle_label"></div><a href="<?php the_permalink()?>"><?php the_title() ?></a><span class="subtitle_text fr_time"><?php the_time('m-d')?>&nbsp;&nbsp;</span></li>		
+							</ul>
+						
+						 <?php
+	                     }
+	                         ++$n;
+                         }
+                         }
+                         ?>
+<!-- 圣贤德育右边列表结束 -->	 
+					</div>
+			</div>
+				<p></p>
+				<div class="shengxdy">
+<!-- 圣贤德育下边列表开始 -->	 
+					 <?php $list_num=array(  
+                         'showposts'=>$instance['numposts'],
+                         'order'=>$instance['order'],
+                         'cat' => $instance['cat']);
+                         query_posts($list_num);
+                     if (have_posts()){
+                             $nu=1;
+                     while (have_posts()) { the_post(); ?>					
+						   <?php if($nu==1||$nu==7){ ?>
+						   	 <div class="sxdy_li">
+						<ul>
+							<li class="shengxdy_pic">
+								<?php img_thumbnail();?>
+							</li>
+							 <?php
+                             }elseif($nu==13){
+                             ?> 
+                             <div class="sxdy_li" id="wei">
+						<ul> 
+							<li class="shengxdy_pic">
+								<?php img_thumbnail();?>
+							</li>
+							 <?php
+                             }else{
+                             ?>	
+                            
+							<li class="subtitle_text"><strong class="liststyle1">.</strong><a href="<?php the_permalink()?>"><?php the_title();?></a></li>
+							<?php
+                             } 
+                             ?> 
+                              <?php if($nu==6||$nu==12||$nu==18){ ?>
+						</ul>
+					</div>
+					          <?php }else if($nu==$instance['numposts']){?>
+                        </ul>
+					</div>
+					<?php
+				        }else{}
+                             
+                             ?> 
+                     <?php ++$nu;}}?>
+<!-- 圣贤德育下边列表结束 -->	 
+				</div>
+	   </div>
+	   			<div class="fjgc_right_box daks">
+				<ul class="kaishi_box">
+					<li class="redcolor ziti"><a href="<?php echo $titleUrl1;?>" target='_blank'><?php echo $title1;?></a></li>
+					<hr />
+<!-- 大德开示下边列表开始 -->	 
+					<?php $guancha_list=array(
+                         'showposts'=>$instance['numposts1'],
+                         'order'=>$instance['order1'],
+                         'cat' => $instance['cat1']);
+                         query_posts($guancha_list);
+                         if (have_posts()){
+                         while (have_posts()) { the_post(); ?>
+                         <li class="kais_li"><strong class="liststyle2">.</strong><a href="<?php the_permalink()?>"><?php the_title();?></a></li>
+                        <?php
+                         }
+                         }
+                    ?>	
+<!-- 大德开示下边列表结束 -->	 									
+				</ul>
+			</div>
+
+		
+<?php
+	echo $after_widget;
+}
+
+function update( $new_instance, $old_instance ) {
+	if($new_instance['numposts']>18){$new_instance['numposts']=18;}else{}
+	if($new_instance['numposts1']>15){$new_instance['numposts1']=15;}else{}
+	$instance = $old_instance;
+	$instance = array();
+	$instance['title'] = strip_tags($new_instance['title']);
+	$instance['titleUrl'] = strip_tags($new_instance['titleUrl']);
+	$instance['hideTitle'] = isset($new_instance['hideTitle']);
+	$instance['newWindow'] = isset($new_instance['newWindow']);
+	$instance['numposts'] = $new_instance['numposts'];
+	$instance['cat'] = $new_instance['cat'];
+	$instance['order'] = $new_instance['order'];
+
+	$instance['title1'] = strip_tags($new_instance['title1']);
+	$instance['titleUrl1'] = strip_tags($new_instance['titleUrl1']);
+	$instance['hideTitle1'] = isset($new_instance['hideTitle1']);
+	$instance['newWindow1'] = isset($new_instance['newWindow1']);
+	$instance['numposts1'] = $new_instance['numposts1'];
+	$instance['cat1'] = $new_instance['cat1'];
+	$instance['order1'] = $new_instance['order1'];
+	return $instance;
+}
+
+function form( $instance ) {
+	$instance = wp_parse_args( (array) $instance, $defaults );
+	$instance = wp_parse_args( (array) $instance, array( 
+		'title' => '',
+		'titleUrl' => '',
+		'newWindow'=>'',
+		'numposts' => 4,
+		'order'=>'',
+		'cat' =>'22',
+
+		'title1' => '',
+		'titleUrl1' => '',
+		'newWindow1'=>'',
+		'numposts1' => 4,
+		'order1'=>'',
+		'cat1' =>'22'));
+		$titleUrl = $instance['titleUrl'];
+		$titleUrl1 = $instance['titleUrl1'];
+		 ?> 
+		 <p><strong>以下为左侧内容</strong></p>
+		<p>
+			<label for="<?php echo $this->get_field_id('title'); ?>">标题：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $instance['title']; ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('titleUrl'); ?>">标题链接：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('titleUrl'); ?>" name="<?php echo $this->get_field_name('titleUrl'); ?>" type="text" value="<?php echo $titleUrl; ?>" />
+		</p>
+		<p>
+			<input type="checkbox" id="<?php echo $this->get_field_id('newWindow'); ?>" name="<?php echo $this->get_field_name('newWindow'); ?>" <?php checked(isset($instance['newWindow']) ? $instance['newWindow'] : 0); ?> />
+			<label for="<?php echo $this->get_field_id('newWindow'); ?>">在新窗口打开标题链接</label>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('numposts'); ?>">显示篇数(最多18篇)：</label> 
+			<input id="<?php echo $this->get_field_id('numposts'); ?>" name="<?php echo $this->get_field_name('numposts'); ?>" type="text" value="<?php echo $instance['numposts']; ?>" size="3" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('cat'); ?>">选择分类：
+			<?php wp_dropdown_categories(array('name' => $this->get_field_name('cat'), 'show_option_all' => 全部分类, 'hide_empty'=>0, 'hierarchical'=>1, 'selected'=>$instance['cat'])); ?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order'); ?>" name="<?php echo $this->get_field_name('order'); ?>" value="DESC" <?php if($instance['order1']=="DESC"){ echo 'checked';} ?>   />
+			<label for="<?php echo $this->get_field_id('order'); ?>">降序 <?php echo $instance['order'];?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order'); ?>" name="<?php echo $this->get_field_name('order'); ?>" value="ASC"  <?php if($instance['order']=="ASC"){ echo 'checked';} ?>  />
+			<label for="<?php echo $this->get_field_id('order'); ?>">升序</label>		    
+	    </p>
+	    <br><hr><p><strong>以下为右侧内容</strong></p>
+		<p>
+			<label for="<?php echo $this->get_field_id('title1'); ?>">标题：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('title1'); ?>" name="<?php echo $this->get_field_name('title1'); ?>" type="text" value="<?php echo $instance['title1']; ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('titleUrl1'); ?>">标题链接：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('titleUrl1'); ?>" name="<?php echo $this->get_field_name('titleUrl1'); ?>" type="text" value="<?php echo $titleUrl1; ?>" />
+		</p>
+		<p>
+			<input type="checkbox" id="<?php echo $this->get_field_id('newWindow1'); ?>" name="<?php echo $this->get_field_name('newWindow1'); ?>" <?php checked(isset($instance['newWindow1']) ? $instance['newWindow1'] : 0); ?> />
+			<label for="<?php echo $this->get_field_id('newWindow1'); ?>">在新窗口打开标题链接</label>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('numposts1'); ?>">显示篇数(最多15篇)：</label> 
+			<input id="<?php echo $this->get_field_id('numposts1'); ?>" name="<?php echo $this->get_field_name('numposts1'); ?>" type="text" value="<?php echo $instance['numposts1']; ?>" size="3" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('cat1'); ?>">选择分类：
+			<?php wp_dropdown_categories(array('name' => $this->get_field_name('cat1'), 'show_option_all' => 全部分类, 'hide_empty'=>0, 'hierarchical'=>1, 'selected'=>$instance['cat1'])); ?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order1'); ?>" name="<?php echo $this->get_field_name('order1'); ?>" value="DESC" <?php if($instance['order1']=="DESC"){ echo 'checked';} ?>   />
+			<label for="<?php echo $this->get_field_id('order1'); ?>">降序 <?php echo $instance['order1'];?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order1'); ?>" name="<?php echo $this->get_field_name('order1'); ?>" value="ASC"  <?php if($instance['order1']=="ASC"){ echo 'checked';} ?>  />
+			<label for="<?php echo $this->get_field_id('order1'); ?>">升序</label>		    
+	    </p>
+
+<?php }
+}
+add_action( 'widgets_init', create_function( '', 'register_widget( "sb_two_top1" );' ) );
+
+
+
+
+
+
+
+// 第三屏
+class sb_three extends WP_Widget {
+	public function __construct() {
+		$widget_ops = array(
+			'classname' => 'sb_three',
+			'description' => __( '显示第三屏内容' ),
+			'customize_selective_refresh' => true,
+		);
+		parent::__construct('sb_three', '第三屏', $widget_ops);
+	}
+
+	function widget( $args, $instance ) {
+		extract( $args );
+		$instance = wp_parse_args( (array) $instance, $defaults );
+		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title'], $instance);
+		$titleUrl = empty($instance['titleUrl']) ? '' : $instance['titleUrl'];
+		$title1 =  empty($instance['title1']) ? '' : $instance['title1'];
+		$titleUrl1 = empty($instance['titleUrl1']) ? '' : $instance['titleUrl1'];
+		$newWindow1 = !empty($instance['newWindow1']) ? true : false;
+		$newWindow = !empty($instance['newWindow']) ? true : false;
+		echo $before_widget;
+		if ($newWindow) $newWindow = "target='_blank'";
+			if(!$hideTitle && $title) {
+				if($titleUrl) $title = "<a  href='$titleUrl' $newWindow>$title<span class='more-i'></a>";
+			}
+		if ( ! empty( $title ) )
+		echo $before_title . $title . $after_title; 
+?>
+					<div class="fjgc_nav_bar">
+						<ul>
+							<li><a href="<?php echo $titleUrl;?>" target='_blank'>更多&gt;&gt;</a></li>
+<!-- 智慧心语子类目开始 -->	
+                            <?php
+				                 $cat=$instance['cat']	;
+				                 $cats = get_categories(array(
+				               	     'child_of' => $cat,
+					                 'parent' => $cat,
+					                 'hide_empty' => 0
+				                      )); 
+				                 foreach($cats as $the_cat){					 
+						          echo '<li><a href="'.get_category_link($the_cat).'">'.$the_cat->name.'</a></li>';			
+				                 }
+			                 ?>
+<!-- 智慧心语子类目结束-->				                 
+						</ul>
+					</div>
+				</div>
+			</div>
+				<hr>
+		</div>
+			<div class="zpyl_left" >
+				<div class="zpyl_left_top">
+<!-- 智慧心语图片开始 -->
+                         <?php $list_num=array(  
+	                          'showposts'=>5,
+	                          'order'=>$instance['order'],
+                              'cat' => $instance['cat']);
+                              query_posts($list_num);
+                              if (have_posts()){?>
+                         <ul>
+                              <?php while (have_posts()) { the_post(); ?>
+                             <li>
+                                 <a href="<?php the_permalink()?>">
+                                 <?php img_thumbnail();?>
+                                 <h3>
+                                 <?php the_title();?></h3>
+                                 </a>
+                             </li>
+                             <?php
+                              } ?>
+                         </ul>
+                         <?php
+                             }
+                      ?>
+                </div>
+				<div class="zpyl_left_bottom">               
+					 <?php $list_num=array(  
+                         'showposts'=>$instance['numposts'],
+                         'order'=>$instance['order'],
+                         'cat' => $instance['cat']);
+                         query_posts($list_num);
+                     if (have_posts()){
+                             $nu=1;
+                     while (have_posts()) { the_post(); ?>					
+						   <?php if($nu==1||$nu==8||$nu==15){ ?>
+					 <div class="tb_bo">
+						<ul> 
+							 <?php
+                             }else{
+                             ?> 								
+							<li><a href="<?php the_permalink()?>"><?php the_title();?></a></li>
+							<?php
+                             } 
+                             ?> 
+                              <?php if($nu==7||$nu==14||$nu==21){ ?>
+						</ul>
+					</div>
+					<?php }else if($nu==$instance['numposts']){?>
+					    </ul>
+					</div>
+					<?php
+                          }else{}
+                              
+                             ?> 
+                     <?php ++$nu;}}?>
+                     
+<!-- 智慧心语文章列表结束 -->
+				</div>
+			</div>
+			<div class="zpyl_left_right tb_right">	
+			     <h3>
+                  <a class="redcolor ziti" href="<?php echo $titleUrl1;?>" target='_blank'><?php echo $title1;?></a>
+			     </h3>
+			     <hr/><div class="tuju">
+<!-- 佛教经典开始 -->
+					 <?php $list_num=array(  
+                         'showposts'=>$instance['numposts1'],
+                         'order'=>$instance['order1'],
+                         'cat' => $instance['cat1']);
+                         query_posts($list_num);
+                     if (have_posts()){
+                     while (have_posts()) { the_post(); ?>	
+                     <ul> 
+                     	<li><a href="<?php the_permalink()?>"><?php img_thumbnail();?></a></li>
+                     </ul>
+                     <?php } }?>
+<!-- 佛教经典结束 -->                     
+			     </div>		
+			</div>				
+
+<?php
+	echo $after_widget;
+}
+
+function update( $new_instance, $old_instance ) {
+	if($new_instance['numposts']>21){$new_instance['numposts']=21;}else{}
+	if($new_instance['numposts1']>3){$new_instance['numposts']=3;}else{}
+	$instance = $old_instance;
+	$instance = array();
+	$instance['title'] = strip_tags($new_instance['title']);
+	$instance['titleUrl'] = strip_tags($new_instance['titleUrl']);
+	$instance['hideTitle'] = isset($new_instance['hideTitle']);
+	$instance['newWindow'] = isset($new_instance['newWindow']);
+	$instance['numposts'] = $new_instance['numposts'];
+	$instance['order'] = $new_instance['order'];
+	$instance['cat'] = $new_instance['cat'];
+
+	$instance['title1'] = strip_tags($new_instance['title1']);
+	$instance['titleUrl1'] = strip_tags($new_instance['titleUrl1']);
+	$instance['hideTitle1'] = isset($new_instance['hideTitle1']);
+	$instance['newWindow1'] = isset($new_instance['newWindow1']);
+	$instance['numposts1'] = $new_instance['numposts1'];
+	$instance['order1'] = $new_instance['order1'];
+	$instance['cat1'] = $new_instance['cat1'];
+	return $instance;
+}
+
+function form( $instance ) {
+	$instance = wp_parse_args( (array) $instance, $defaults );
+	$instance = wp_parse_args( (array) $instance, array( 
+		'title' => '分类模块',		
+		'titleUrl' => '',		
+		'numposts' => 5,
+	    'newWindow' => 0,
+	    'order'=>'',
+		'cat' => 0,	
+
+		'title1' => '',
+		'titleUrl1' => '',
+		'newWindow1'=>'',
+		'numposts1' => 3,
+		'order1'=>'',
+		'cat1' =>'0'));
+		$titleUrl = $instance['titleUrl'];
+		$titleUrl1 = $instance['titleUrl1'];
+		 ?> 
+        <p><strong>以下为左侧内容</strong></p>
+		<p>
+			<label for="<?php echo $this->get_field_id('title'); ?>">标题：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $instance['title']; ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('titleUrl'); ?>">标题链接：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('titleUrl'); ?>" name="<?php echo $this->get_field_name('titleUrl'); ?>" type="text" value="<?php echo $titleUrl; ?>" />
+		</p>
+		<p>
+			<input type="checkbox" id="<?php echo $this->get_field_id('newWindow'); ?>" name="<?php echo $this->get_field_name('newWindow'); ?>" <?php checked(isset($instance['newWindow']) ? $instance['newWindow'] : 0); ?> />
+			<label for="<?php echo $this->get_field_id('newWindow'); ?>">在新窗口打开标题链接</label>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('numposts'); ?>">显示篇数(最多18篇)：</label> 
+			<input id="<?php echo $this->get_field_id('numposts'); ?>" name="<?php echo $this->get_field_name('numposts'); ?>" type="text" value="<?php echo $instance['numposts']; ?>" size="3" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('cat'); ?>">选择分类：
+			<?php wp_dropdown_categories(array('name' => $this->get_field_name('cat'), 'show_option_all' => 全部分类, 'hide_empty'=>0, 'hierarchical'=>1, 'selected'=>$instance['cat'])); ?></label>
+		</p>
+			<input type="radio" id="<?php echo $this->get_field_id('order'); ?>" name="<?php echo $this->get_field_name('order'); ?>" value="DESC" <?php if($instance['order1']=="DESC"){ echo 'checked';} ?>   />
+			<label for="<?php echo $this->get_field_id('order'); ?>">降序 <?php echo $instance['order'];?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order'); ?>" name="<?php echo $this->get_field_name('order'); ?>" value="ASC"  <?php if($instance['order']=="ASC"){ echo 'checked';} ?>  />
+			<label for="<?php echo $this->get_field_id('order'); ?>">升序</label>		    
+	    </p>
+	    <br><hr><p><strong>以下为右侧内容</strong></p>
+		<p>
+			<label for="<?php echo $this->get_field_id('title1'); ?>">标题：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('title1'); ?>" name="<?php echo $this->get_field_name('title1'); ?>" type="text" value="<?php echo $instance['title1']; ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('titleUrl1'); ?>">标题链接：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('titleUrl1'); ?>" name="<?php echo $this->get_field_name('titleUrl1'); ?>" type="text" value="<?php echo $titleUrl1; ?>" />
+		</p>
+		<p>
+			<input type="checkbox" id="<?php echo $this->get_field_id('newWindow1'); ?>" name="<?php echo $this->get_field_name('newWindow1'); ?>" <?php checked(isset($instance['newWindow1']) ? $instance['newWindow1'] : 0); ?> />
+			<label for="<?php echo $this->get_field_id('newWindow1'); ?>">在新窗口打开标题链接</label>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('numposts1'); ?>">显示图片数量(最多3张)：</label> 
+			<input id="<?php echo $this->get_field_id('numposts1'); ?>" name="<?php echo $this->get_field_name('numposts1'); ?>" type="text" value="<?php echo $instance['numposts1']; ?>" size="3" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('cat1'); ?>">选择分类：
+			<?php wp_dropdown_categories(array('name' => $this->get_field_name('cat1'), 'show_option_all' => 全部分类, 'hide_empty'=>0, 'hierarchical'=>1, 'selected'=>$instance['cat1'])); ?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order1'); ?>" name="<?php echo $this->get_field_name('order1'); ?>" value="DESC" <?php if($instance['order1']=="DESC"){ echo 'checked';} ?>   />
+			<label for="<?php echo $this->get_field_id('order1'); ?>">降序 <?php echo $instance['order1'];?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order1'); ?>" name="<?php echo $this->get_field_name('order1'); ?>" value="ASC"  <?php if($instance['order1']=="ASC"){ echo 'checked';} ?>  />
+			<label for="<?php echo $this->get_field_id('order1'); ?>">升序</label>		    
+	    </p>
+
+<?php }
+}
+add_action( 'widgets_init', create_function( '', 'register_widget( "sb_three" );' ) );
+
+
+
+
+
+
+//第四屏
+class sb_four extends WP_Widget {
+	public function __construct() {
+		$widget_ops = array(
+			'classname' => 'sb_four',
+			'description' => __( '显示第四屏内容' ),
+			'customize_selective_refresh' => true,
+		);
+		parent::__construct('sb_four', '第四屏', $widget_ops);
+	}
+
+	function widget( $args, $instance ) {
+		extract( $args );
+		$instance = wp_parse_args( (array) $instance, $defaults );
+		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title'], $instance);
+		$titleUrl = empty($instance['titleUrl']) ? '' : $instance['titleUrl'];
+		$title1 =  empty($instance['title1']) ? '' : $instance['title1'];
+		$titleUrl1 = empty($instance['titleUrl1']) ? '' : $instance['titleUrl1'];
+		$newWindow1 = !empty($instance['newWindow1']) ? true : false;
+		$newWindow = !empty($instance['newWindow']) ? true : false;
+		echo $before_widget;
+		if ($newWindow) $newWindow = "target='_blank'";
+			if(!$hideTitle && $title) {
+				if($titleUrl) $title = "<a href='$titleUrl' $newWindow>$title<span class='more-i'></a>";
+			}
+		if ( ! empty( $title ) )
+		echo $before_title . $title . $after_title; 
+?>
+					<div class="fjgc_nav_bar">
+						<ul>
+							<li><a href="<?php echo $titleUrl;?>" target='_blank'>更多&gt;&gt;</a></li>
+<!-- 观音菩萨子类目开始 -->	
+                            <?php
+				                 $cat=$instance['cat'];
+				                 $cats = get_categories(array(
+				               	     'child_of' => $cat,
+					                 'parent' => $cat,
+					                 'hide_empty' => 0
+				                      )); 
+				                 foreach($cats as $the_cat){					 
+						          echo '<li><a href="'.get_category_link($the_cat).'">'.$the_cat->name.'</a></li>';			
+				                 }
+			                 ?>
+<!-- 观音菩萨子类目结束-->				                 
+						</ul>
+					</div>
+				</div></div>
+				<hr>
+				
+			</div>
+			<div class="zpyl_left" >
+				<div class="zpyl_left_top">
+<!-- 观音菩萨图片开始 -->
+                         <?php $list_num=array(  
+	                          'showposts'=>5,
+	                          'order'=>$instance['order'],
+                              'cat' => $instance['cat'],);
+                              query_posts($list_num);
+                              if (have_posts()){?>
+                         <ul>
+                              <?php while (have_posts()) { the_post(); ?>
+                             <li>
+                                 <a href="<?php the_permalink()?>">
+                                 <?php img_thumbnail();?>
+                                 <h3 class="fob_h3">
+                                 <?php the_title();?></h3>
+                                 </a>
+                             </li>
+                             <?php
+                              } ?>
+                         </ul>
+                         <?php
+                             }
+                         ?>  
+<!-- 观音菩萨图片结束 -->
+				</div>
+				<div class="zpyl_left_bottom">
+<!-- 观音菩萨文章列表开始 -->
+                     
+					 <?php $list_num=array(  
+                         'showposts'=>$instance['numposts'],
+                         'order'=>$instance['order'],
+                         'cat' => $instance['cat']);
+                         query_posts($list_num);
+                     if (have_posts()){
+                             $nu=1;
+                     while (have_posts()) { the_post(); ?>					
+						   <?php if($nu==1||$nu==6||$nu==11||$nu==16){ ?>
+					 <div class="fob_list">
+						<ul> 
+							 <?php
+                             }else{
+                             ?> 								
+							<li><a href="<?php the_permalink()?>"><?php the_title();?></a></li>
+							<?php
+                             } 
+                             ?> 
+                              <?php if($nu==5||$nu==10||$nu==15||$nu==20){ ?>
+						</ul>
+					</div>
+					          <?php }else if($nu==$instance['numposts']){?>
+						</ul>
+					</div>					          
+					<?php
+                             } else{}
+                             ?> 
+                     <?php ++$nu;}}?>
+                     
+<!-- 观音菩萨文章列表结束 -->
+				</div>
+			</div>
+			<div class="zpyl_left_right fo_left">	
+			     <h3>
+                   <a class="redcolor ziti" href="<?php echo $titleUrl1;?>" target='_blank'><?php echo $title1;?></a>
+			     </h3>
+			     <hr/>	
+        	     <div class="zpyl_left_right_bottom">
+<!-- 佛法圣迹开始 -->
+					 <?php $list_num=array(  
+                         'showposts'=>$instance['numposts1'],
+                         'order'=>$instance['order1'],
+                         'cat' => $instance['cat1']);
+                         query_posts($list_num);
+                     if (have_posts()){
+                     while (have_posts()) { the_post(); $n==1; ?>	
+                     <ul class="fo_lf_ul"> 
+                     	<li><a href="<?php the_permalink()?>"><?php the_title();?></a></li>                     	
+                     </ul>
+                          <?php if($n==$instance['numposts1']-1){?>
+                          <div><?php img_thumbnail(); ?></div>
+                          <?php if($n==$instance['numposts1']-1) {}}?>
+                     <?php $n++; } }?>
+<!-- 佛法圣迹结束 -->                     
+			     </div>	
+			     	
+			</div>	
+
+<?php
+	echo $after_widget;
+}
+
+function update( $new_instance, $old_instance ) {
+	if($new_instance['numposts']>20){$new_instance['numposts']=20;}else{}
+	if($new_instance['numposts1']>9){$new_instance['numposts1']=9;}else{}
+	$instance = $old_instance;
+	$instance = array();
+	$instance['title'] = strip_tags($new_instance['title']);
+	$instance['titleUrl'] = strip_tags($new_instance['titleUrl']);
+	$instance['hideTitle'] = isset($new_instance['hideTitle']);
+	$instance['newWindow'] = isset($new_instance['newWindow']);
+	$instance['numposts'] = $new_instance['numposts'];
+	$instance['cat'] = $new_instance['cat'];
+	$instance['order'] = $new_instance['order'];
+
+	$instance['title1'] = strip_tags($new_instance['title1']);
+	$instance['titleUrl1'] = strip_tags($new_instance['titleUrl1']);
+	$instance['newWindow1'] = isset($new_instance['newWindow1']);
+	$instance['numposts1'] = $new_instance['numposts1'];
+	$instance['cat1'] = $new_instance['cat1'];
+	$instance['order1'] = $new_instance['order1'];
+	return $instance;
+}
+
+function form( $instance ) {
+	$instance = wp_parse_args( (array) $instance, $defaults );
+	$instance = wp_parse_args( (array) $instance, array( 
+		'title' => '分类模块',		
+		'titleUrl' => '',		
+		'numposts' =>'',
+		'newWindow'=>'',
+		'order'=>'',
+		'cat' => 0,
+
+		'title1' => '',
+		'titleUrl1' => '',
+		'newWindow1'=>'',
+		'numposts1' => 4,
+		'order1'=>'',
+		'cat1' =>'22'));
+		$titleUrl = $instance['titleUrl'];
+	    $titleUrl1 = $instance['titleUrl1'];
+		 ?> 
+         <p><strong>以下为左侧内容</strong></p>
+		<p>
+			<label for="<?php echo $this->get_field_id('title'); ?>">标题：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $instance['title']; ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('titleUrl'); ?>">标题链接：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('titleUrl'); ?>" name="<?php echo $this->get_field_name('titleUrl'); ?>" type="text" value="<?php echo $titleUrl; ?>" />
+		</p>
+		<p>
+			<input type="checkbox" id="<?php echo $this->get_field_id('newWindow'); ?>" name="<?php echo $this->get_field_name('newWindow'); ?>" <?php checked(isset($instance['newWindow']) ? $instance['newWindow'] : 0); ?> />
+			<label for="<?php echo $this->get_field_id('newWindow'); ?>">在新窗口打开左边标题链接</label>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('numposts'); ?>">显示篇数(最多20篇)：</label> 
+			<input id="<?php echo $this->get_field_id('numposts'); ?>" name="<?php echo $this->get_field_name('numposts'); ?>" type="text" value="<?php echo $instance['numposts']; ?>" size="3" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('cat'); ?>">选择分类：
+			<?php wp_dropdown_categories(array('name' => $this->get_field_name('cat'), 'show_option_all' => 全部分类, 'hide_empty'=>0, 'hierarchical'=>1, 'selected'=>$instance['cat'])); ?></label>
+		</p>
+		 <p>
+			<input type="radio" id="<?php echo $this->get_field_id('order'); ?>" name="<?php echo $this->get_field_name('order'); ?>" value="DESC" <?php if($instance['order']=="DESC"){ echo 'checked';} ?>   />
+			<label for="<?php echo $this->get_field_id('order'); ?>">降序 <?php echo $instance['order'];?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order'); ?>" name="<?php echo $this->get_field_name('order'); ?>" value="ASC"  <?php if($instance['order']=="ASC"){ echo 'checked';} ?>  />
+			<label for="<?php echo $this->get_field_id('order'); ?>">升序</label>		    
+	    </p>
+	    <br><hr><p><strong>以下为右侧内容</strong></p>
+		<p>
+			<label for="<?php echo $this->get_field_id('title1'); ?>">标题：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('title1'); ?>" name="<?php echo $this->get_field_name('title1'); ?>" type="text" value="<?php echo $instance['title1']; ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('titleUrl1'); ?>">标题链接：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('titleUrl1'); ?>" name="<?php echo $this->get_field_name('titleUrl1'); ?>" type="text" value="<?php echo $titleUrl1; ?>" />
+		</p>
+		<p>
+			<input type="checkbox" id="<?php echo $this->get_field_id('newWindow1'); ?>" name="<?php echo $this->get_field_name('newWindow1'); ?>" <?php checked(isset($instance['newWindow1']) ? $instance['newWindow1'] : 0); ?> />
+			<label for="<?php echo $this->get_field_id('newWindow1'); ?>">在新窗口打开标题链接</label>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('numposts1'); ?>">显示篇数(最多9篇)：</label> 
+			<input id="<?php echo $this->get_field_id('numposts1'); ?>" name="<?php echo $this->get_field_name('numposts1'); ?>" type="text" value="<?php echo $instance['numposts1']; ?>" size="3" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('cat1'); ?>">选择分类：
+			<?php wp_dropdown_categories(array('name' => $this->get_field_name('cat1'), 'show_option_all' => 全部分类, 'hide_empty'=>0, 'hierarchical'=>1, 'selected'=>$instance['cat1'])); ?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order1'); ?>" name="<?php echo $this->get_field_name('order1'); ?>" value="DESC" <?php if($instance['order1']=="DESC"){ echo 'checked';} ?>   />
+			<label for="<?php echo $this->get_field_id('order1'); ?>">降序 <?php echo $instance['order1'];?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order1'); ?>" name="<?php echo $this->get_field_name('order1'); ?>" value="ASC"  <?php if($instance['order1']=="ASC"){ echo 'checked';} ?>  />
+			<label for="<?php echo $this->get_field_id('order1'); ?>">升序</label>		  
+
+<?php }
+}
+add_action( 'widgets_init', create_function( '', 'register_widget( "sb_four" );' ) );
+
+
+
+
+
+
+//第五屏
+class sb_five extends WP_Widget {
+	public function __construct() {
+		$widget_ops = array(
+			'classname' => 'sb_five',
+			'description' => __( '显示第五屏内容' ),
+			'customize_selective_refresh' => true,
+		);
+		parent::__construct('sb_five', '第五屏', $widget_ops);
+	}
+
+	function widget( $args, $instance ) {
+		extract( $args );
+		$instance = wp_parse_args( (array) $instance, $defaults );
+		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title'], $instance);
+		$titleUrl = empty($instance['titleUrl']) ? '' : $instance['titleUrl'];
+		$title1 =  empty($instance['title1']) ? '' : $instance['title1'];
+		$titleUrl1 = empty($instance['titleUrl1']) ? '' : $instance['titleUrl1'];
+		$newWindow = !empty($instance['newWindow']) ? true : false;
+		$newWindow1 = !empty($instance['newWindow1']) ? true : false;
+		echo $before_widget;
+		if ($newWindow) $newWindow = "target='_blank'";
+			if(!$hideTitle && $title) {
+				if($titleUrl) $title = "<a href='$titleUrl' $newWindow>$title<span class='more-i'></a>";
+			}
+		if ( ! empty( $title ) )
+		echo $before_title . $title . $after_title; 
+?>
+					<div class="fjgc_nav_bar">
+						<ul>
+							<li><a href="<?php echo $titleUrl;?>" target='_blank'>更多&gt;&gt;</a></li>
+<!-- 学佛受用子类目开始 -->	
+                            <?php
+				                 $cat=$instance['cat']	;
+				                 $cats = get_categories(array(
+				               	     'child_of' => $cat,
+					                 'parent' => $cat,
+					                 'hide_empty' => 0
+				                      )); 
+				                 foreach($cats as $the_cat){					 
+						          echo '<li><a href="'.get_category_link($the_cat).'">'.$the_cat->name.'</a></li>';			
+				                 }
+			                 ?>
+<!-- 学佛受用子类目结束-->				                 
+						</ul>
+					</div>
+				</div>
+			</div>
+				<hr>
+				
+			</div>
+			<div class="zpyl_left" >
+				<div class="zpyl_left_bottom xuefsy">
+<!-- 学佛受用文章列表开始 -->                     
+					 <?php $list_num=array(  
+                         'showposts'=>$instance['numposts'],
+                         
+                         'ororder'=>$instance['order'],
+                         'cat' => $instance['cat']);
+                         query_posts($list_num);
+                     if (have_posts()){
+                             $nu=1;
+                     while (have_posts()) { the_post(); ?>					
+						   <?php if($nu==1||$nu==6||$nu==11||$nu==16){ ?>
+					 <div class="fjwn" >
+					 	     <div class="fjwm_tupian">
+					 	         <?php img_thumbnail();?>
+					 	     </div>
+						<ul> 
+
+							 <?php
+                             }else{
+                             ?> 								
+							<li><a href="<?php the_permalink()?>"><?php the_title();?></a></li>
+							<?php
+                             } 
+                             ?> 
+                              <?php if($nu==5||$nu==10||$nu==15||$nu==20){ ?>
+						</ul>
+					</div>
+                              <?php }else if($nu==$instance['numposts']){ ?>
+						</ul>
+					</div>
+					<?php
+                        }else{} 
+                             ?> 
+                     <?php ++$nu;}}?>
+                     
+<!-- 学佛受用文章列表结束 -->
+				</div>
+			</div>
+					
+		</div>
+			<div class="zpyl_left_right fi_right">	
+			     <h3 class="zpyl_left_right_top" >
+                   <a class="redcolor ziti" href="<?php echo $titleUrl1;?>" target='_blank'><?php echo $title1;?></a>
+			     </h3>
+			     <hr/>	
+        	     <div class="zpyl_left_right_bottom">
+<!-- 素味人生开始 -->
+					 <?php $list_num=array(  
+                         'showposts'=>$instance['numposts1'],
+                         'order'=>$instance['order1'],
+                         'cat' => $instance['cat1']);
+                         query_posts($list_num);
+                     if (have_posts()){
+                     while (have_posts()) { the_post(); ?>	
+                     <ul class="fi_ri_ul"> 
+                     	<li class="fi_ri_li"><a href="<?php the_permalink()?>"><?php the_title();?></a></li>
+                     </ul>
+                     <?php } }?>
+<!-- 素味人生结束 -->                     
+			     </div>	
+			</div>
+
+<?php
+	echo $after_widget;
+}
+
+function update( $new_instance, $old_instance ) {
+    if($new_instance['numposts']>20){$new_instance['numposts']=20;}else{}
+	if($new_instance['numposts1']>10){$new_instance['numposts1']=10;}else{}
+	$instance = $old_instance;
+	$instance = array();
+	$instance['title'] = strip_tags($new_instance['title']);
+	$instance['titleUrl'] = strip_tags($new_instance['titleUrl']);
+	$instance['hideTitle'] = isset($new_instance['hideTitle']);
+	$instance['newWindow'] = isset($new_instance['newWindow']);
+	$instance['numposts'] = $new_instance['numposts'];
+	$instance['order'] = $new_instance['order'];
+	$instance['cat'] = $new_instance['cat'];
+
+	$instance['title1'] = strip_tags($new_instance['title1']);
+	$instance['titleUrl1'] = strip_tags($new_instance['titleUrl1']);
+	$instance['newWindow1'] = isset($new_instance['newWindow1']);
+	$instance['numposts1'] = $new_instance['numposts1'];
+	$instance['cat1'] = $new_instance['cat1'];
+	$instance['order1'] = $new_instance['order1'];
+	return $instance;
+}
+
+function form( $instance ) {
+	$instance = wp_parse_args( (array) $instance, $defaults );
+	$instance = wp_parse_args( (array) $instance, array( 
+		'title' => '分类模块',		
+		'titleUrl' => '',		
+		'numposts' => '',
+		'newWindow'=>'',
+		'order'=>'',	
+		'cat' => 0,
+
+		'title1' => '',
+		'titleUrl1' => '',
+		'newWindow1'=>'',
+		'numposts1' => 4,
+		'order1'=>'',
+		'cat1' =>'22'));
+		$titleUrl = $instance['titleUrl'];
+	    $titleUrl1 = $instance['titleUrl1'];
+		 ?> 
+        <p><strong>以下为左侧内容</strong></p>
+		<p>
+			<label for="<?php echo $this->get_field_id('title'); ?>">标题：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $instance['title']; ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('titleUrl'); ?>">标题链接：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('titleUrl'); ?>" name="<?php echo $this->get_field_name('titleUrl'); ?>" type="text" value="<?php echo $titleUrl; ?>" />
+		</p>
+		<p>
+			<input type="checkbox" id="<?php echo $this->get_field_id('newWindow'); ?>" name="<?php echo $this->get_field_name('newWindow'); ?>" <?php checked(isset($instance['newWindow']) ? $instance['newWindow'] : 0); ?> />
+			<label for="<?php echo $this->get_field_id('newWindow'); ?>">在新窗口打开标题链接</label>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('numposts'); ?>">显示篇数(最多20篇)：</label> 
+			<input id="<?php echo $this->get_field_id('numposts'); ?>" name="<?php echo $this->get_field_name('numposts'); ?>" type="text" value="<?php echo $instance['numposts']; ?>" size="3" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('cat'); ?>">选择分类：
+			<?php wp_dropdown_categories(array('name' => $this->get_field_name('cat'), 'show_option_all' => 全部分类, 'hide_empty'=>0, 'hierarchical'=>1, 'selected'=>$instance['cat'])); ?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order'); ?>" name="<?php echo $this->get_field_name('order'); ?>" value="DESC" <?php if($instance['order']=="DESC"){ echo 'checked';} ?>   />
+			<label for="<?php echo $this->get_field_id('order'); ?>">降序 <?php echo $instance['order'];?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order'); ?>" name="<?php echo $this->get_field_name('order'); ?>" value="ASC"  <?php if($instance['order']=="ASC"){ echo 'checked';} ?>  />
+			<label for="<?php echo $this->get_field_id('order'); ?>">升序</label>		    
+	    </p>
+	    	    <br><hr><p><strong>以下为右侧内容</strong></p>
+		<p>
+			<label for="<?php echo $this->get_field_id('title1'); ?>">标题：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('title1'); ?>" name="<?php echo $this->get_field_name('title1'); ?>" type="text" value="<?php echo $instance['title1']; ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('titleUrl1'); ?>">标题链接：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('titleUrl1'); ?>" name="<?php echo $this->get_field_name('titleUrl1'); ?>" type="text" value="<?php echo $titleUrl1; ?>" />
+		</p>
+		<p>
+			<input type="checkbox" id="<?php echo $this->get_field_id('newWindow1'); ?>" name="<?php echo $this->get_field_name('newWindow1'); ?>" <?php checked(isset($instance['newWindow1']) ? $instance['newWindow1'] : 0); ?> />
+			<label for="<?php echo $this->get_field_id('newWindow1'); ?>">在新窗口打开标题链接</label>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('numposts1'); ?>">显示篇数(最多10篇)：</label> 
+			<input id="<?php echo $this->get_field_id('numposts1'); ?>" name="<?php echo $this->get_field_name('numposts1'); ?>" type="text" value="<?php echo $instance['numposts1']; ?>" size="3" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('cat1'); ?>">选择分类：
+			<?php wp_dropdown_categories(array('name' => $this->get_field_name('cat1'), 'show_option_all' => 全部分类, 'hide_empty'=>0, 'hierarchical'=>1, 'selected'=>$instance['cat1'])); ?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order1'); ?>" name="<?php echo $this->get_field_name('order1'); ?>" value="DESC" <?php if($instance['order1']=="DESC"){ echo 'checked';} ?>   />
+			<label for="<?php echo $this->get_field_id('order1'); ?>">降序 <?php echo $instance['order1'];?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order1'); ?>" name="<?php echo $this->get_field_name('order1'); ?>" value="ASC"  <?php if($instance['order1']=="ASC"){ echo 'checked';} ?>  />
+			<label for="<?php echo $this->get_field_id('order1'); ?>">升序</label>	
+		</p>
+
+<?php }
+}
+add_action( 'widgets_init', create_function( '', 'register_widget( "sb_five" );' ) );
+
+
+
+//第六屏
+class sb_six extends WP_Widget {
+	public function __construct() {
+		$widget_ops = array(
+			'classname' => 'sb_six',
+			'description' => __( '显示第六屏内容' ),
+			'customize_selective_refresh' => true,
+		);
+		parent::__construct('sb_six', '第六屏', $widget_ops);
+	}
+
+	function widget( $args, $instance ) {
+		extract( $args );
+		$instance = wp_parse_args( (array) $instance, $defaults );
+		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title'], $instance);
+		$titleUrl = empty($instance['titleUrl']) ? '' : $instance['titleUrl'];
+		$title1 =  empty($instance['title1']) ? '' : $instance['title1'];
+		$titleUrl1 = empty($instance['titleUrl1']) ? '' : $instance['titleUrl1'];
+		$newWindow1 = !empty($instance['newWindow1']) ? true : false;
+		$newWindow = !empty($instance['newWindow']) ? true : false;
+		echo $before_widget;
+		if ($newWindow) $newWindow = "target='_blank'";
+			if(!$hideTitle && $title) {
+				if($titleUrl) $title = "<a href='$titleUrl' $newWindow>$title<span class='more-i'></a>";
+			}
+		if ( ! empty( $title ) )
+		echo $before_title . $title . $after_title; 
+?>
+			
+					<div class="fjgc_nav_bar">
+						<ul>
+							<li><a href="<?php echo $titleUrl;?>" target='_blank'>更多&gt;&gt;</a></li>
+<!-- 学佛修行子类目开始 -->	
+                            <?php
+				                 $cat=$instance['cat'];
+				                 $cats = get_categories(array(
+				               	     'child_of' => $cat,
+					                 'parent' => $cat,
+					                 'hide_empty' => 0
+				                      )); 
+				                 foreach($cats as $the_cat){					 
+						          echo '<li><a href="'.get_category_link($the_cat).'">'.$the_cat->name.'</a></li>';			
+				                 }
+			                 ?>
+<!-- 学佛修行类目结束-->				                 
+						</ul>
+					</div>
+				</div>
+			</div>
+				<hr>
+				
+			</div>
+			<div class="zpyl_left xfxx_box sb_li" >
+				<div class="zpyl_left_bottom xuefxx">
+<!-- 学佛修行图片文章列表开始 -->                    
+					 <?php
+
+
+					  $list_num=array(  
+                         'showposts'=>$instance['numposts'],
+                         'order'=>$instance['order'],
+                         'cat' => $instance['cat']);
+                         query_posts($list_num);
+                     if (have_posts()){
+                             $nu=1;
+                     while (have_posts()) { the_post(); ?>					
+						   <?php if($nu==1||$nu==5||$nu==9||$nu==13){ ?>
+					 <div class="xx_lb">
+					 	<div class="xufo_tupian">
+					 		 <?php img_thumbnail()?>
+					 		 <div class="xufo_tupian_title">
+								 
+								 <a href="<?php the_permalink()?>"><?php the_title()?></a>
+					 		       <?php the_excerpt()?>
+					 	     </div>
+					 	 </div>
+						<ul class="sb_ul"> 							
+							 <?php
+                             }else{
+                             ?> 								
+							<li><a href="<?php the_permalink()?>"><?php the_title();?></a><span class="sb_span"><?php the_time('m-d')?></span></li>
+							<?php
+                             } 
+                             ?> 
+                              <?php if($nu==4||$nu==8||$nu==12||$nu==16){ ?>
+						</ul>
+					</div>
+                              <?php }else if($nu==$instance['numposts']){ ?>
+						</ul>
+					</div>
+					<?php
+                        }else{} 
+                             ?> 
+                     <?php ++$nu;}}?>
+                     
+<!-- 学佛修行图片文章列表结束 -->
+				</div>
+			</div>
+			<div class="zpyl_left_right si_le">	
+			     <h3 class="" >
+                   <a class="redcolor ziti" href="<?php echo $titleUrl1;?>" target='_blank'><?php echo $title1;?></a>
+			     </h3>
+			     <hr/>	
+        	     <div class="zpyl_left_right_bottom">
+<!-- 西方极乐开始 -->
+					 <?php $list_num=array(  
+                         'showposts'=>$instance['numposts1'],
+                         'order'=>$instance['order1'],
+                         'cat' => $instance['cat1']);
+                         query_posts($list_num);
+                     if (have_posts()){
+                     while (have_posts()) { the_post(); $n==1;?>	                    
+                     <ul class="si_le_ul"> 
+                     	<li class="si_le_li"><a href="<?php the_permalink()?>"><?php the_title();?></a>
+                     </ul>
+                          <?php if($n==$instance['numposts1']-1){?>
+                          <div><?php img_thumbnail(); ?></div>
+                          <?php if($n==$instance['numposts1']-1) {}}?>
+                     <?php $n++; } }?>
+<!-- 西方极乐结束 -->                        		 
+                 </div>	
+			     	
+			</div>					
+<?php
+	echo $after_widget;
+}
+
+function update( $new_instance, $old_instance ) {
+	if($new_instance['numposts']>16){$new_instance['numposts']=16;}else{}
+	if($new_instance['numposts1']>10){$new_instance['numposts1']=10;}else{}	
+	$instance = $old_instance;
+	$instance = array();
+	$instance['title'] = strip_tags($new_instance['title']);
+	$instance['titleUrl'] = strip_tags($new_instance['titleUrl']);
+	$instance['hideTitle'] = isset($new_instance['hideTitle']);
+	$instance['newWindow'] = isset($new_instance['newWindow']);
+	$instance['numposts'] = $new_instance['numposts'];
+	$instance['cat'] = $new_instance['cat'];
+	$instance['order'] = $new_instance['order'];
+
+	$instance['title1'] = strip_tags($new_instance['title1']);
+	$instance['titleUrl1'] = strip_tags($new_instance['titleUrl1']);
+	$instance['newWindow1'] = isset($new_instance['newWindow1']);
+	$instance['numposts1'] = $new_instance['numposts1'];
+	$instance['cat1'] = $new_instance['cat1'];
+	$instance['order1'] = $new_instance['order1'];
+	return $instance;
+}
+
+function form( $instance ) {
+	$instance = wp_parse_args( (array) $instance, $defaults );
+	$instance = wp_parse_args( (array) $instance, array( 
+		'title' => '分类模块',		
+		'titleUrl' => '',	
+		'numposts' => 5,
+	    'newWindow'=>'',
+	    'order'=>'',
+		'cat' => 0,
+
+		'title1' => '',
+		'titleUrl1' => '',
+		'newWindow1'=>'',
+		'numposts1' =>'',
+		'order1'=>'',
+		'cat1' =>''));
+		$titleUrl = $instance['titleUrl'];
+	    $titleUrl1 = $instance['titleUrl1'];
+		 ?> 
+        <p><strong>以下为左侧内容</strong></p>
+		<p>
+			<label for="<?php echo $this->get_field_id('title'); ?>">标题：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $instance['title']; ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('titleUrl'); ?>">标题链接：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('titleUrl'); ?>" name="<?php echo $this->get_field_name('titleUrl'); ?>" type="text" value="<?php echo $titleUrl; ?>" />
+		</p>
+		<p>
+			<input type="checkbox" id="<?php echo $this->get_field_id('newWindow'); ?>" name="<?php echo $this->get_field_name('newWindow'); ?>" <?php checked(isset($instance['newWindow']) ? $instance['newWindow'] : 0); ?> />
+			<label for="<?php echo $this->get_field_id('newWindow'); ?>">在新窗口打开左边标题链接</label>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('numposts'); ?>">显示篇数(最多16篇)：</label> 
+			<input id="<?php echo $this->get_field_id('numposts'); ?>" name="<?php echo $this->get_field_name('numposts'); ?>" type="text" value="<?php echo $instance['numposts']; ?>" size="3" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('cat'); ?>">选择分类：
+			<?php wp_dropdown_categories(array('name' => $this->get_field_name('cat'), 'show_option_all' => 全部分类, 'hide_empty'=>0, 'hierarchical'=>1, 'selected'=>$instance['cat'])); ?></label>
+		</p>
+        <p>
+			<input type="radio" id="<?php echo $this->get_field_id('order'); ?>" name="<?php echo $this->get_field_name('order'); ?>" value="DESC" <?php if($instance['order']=="DESC"){ echo 'checked';} ?>   />
+			<label for="<?php echo $this->get_field_id('order'); ?>">降序 <?php echo $instance['order'];?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order'); ?>" name="<?php echo $this->get_field_name('order'); ?>" value="ASC"  <?php if($instance['order']=="ASC"){ echo 'checked';} ?>  />
+			<label for="<?php echo $this->get_field_id('order'); ?>">升序</label>		    
+	    </p>
+	    	    <br><hr><p><strong>以下为右侧内容</strong></p>
+		<p>
+			<label for="<?php echo $this->get_field_id('title1'); ?>">标题：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('title1'); ?>" name="<?php echo $this->get_field_name('title1'); ?>" type="text" value="<?php echo $instance['title1']; ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('titleUrl1'); ?>">标题链接：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('titleUrl1'); ?>" name="<?php echo $this->get_field_name('titleUrl1'); ?>" type="text" value="<?php echo $titleUrl1; ?>" />
+		</p>
+		<p>
+			<input type="checkbox" id="<?php echo $this->get_field_id('newWindow1'); ?>" name="<?php echo $this->get_field_name('newWindow1'); ?>" <?php checked(isset($instance['newWindow1']) ? $instance['newWindow1'] : 0); ?> />
+			<label for="<?php echo $this->get_field_id('newWindow1'); ?>">在新窗口打开标题链接</label>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('numposts1'); ?>">显示篇数(最多10篇)：</label> 
+			<input id="<?php echo $this->get_field_id('numposts1'); ?>" name="<?php echo $this->get_field_name('numposts1'); ?>" type="text" value="<?php echo $instance['numposts1']; ?>" size="3" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('cat1'); ?>">选择分类：
+			<?php wp_dropdown_categories(array('name' => $this->get_field_name('cat1'), 'show_option_all' => 全部分类, 'hide_empty'=>0, 'hierarchical'=>1, 'selected'=>$instance['cat1'])); ?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order1'); ?>" name="<?php echo $this->get_field_name('order1'); ?>" value="DESC" <?php if($instance['order1']=="DESC"){ echo 'checked';} ?>   />
+			<label for="<?php echo $this->get_field_id('order1'); ?>">降序 <?php echo $instance['order1'];?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order1'); ?>" name="<?php echo $this->get_field_name('order1'); ?>" value="ASC"  <?php if($instance['order1']=="ASC"){ echo 'checked';} ?>  />
+			<label for="<?php echo $this->get_field_id('order1'); ?>">升序</label>
+		</p>
+
+<?php }
+}
+add_action( 'widgets_init', create_function( '', 'register_widget( "sb_six" );' ) );
+
+
+
+
+
+//第七屏
+class sb_seven extends WP_Widget {
+	public function __construct() {
+		$widget_ops = array(
+			'classname' => 'sb_seven',
+			'description' => __( '显示第七屏内容' ),
+			'customize_selective_refresh' => true,
+		);
+		parent::__construct('sb_seven', '第七屏', $widget_ops);
+	}
+
+	function widget( $args, $instance ) {
+		extract( $args );
+		$instance = wp_parse_args( (array) $instance, $defaults );
+		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title'], $instance);
+		$titleUrl = empty($instance['titleUrl']) ? '' : $instance['titleUrl'];
+		$title1 =  empty($instance['title1']) ? '' : $instance['title1'];
+		$titleUrl1 = empty($instance['titleUrl1']) ? '' : $instance['titleUrl1'];
+		$newWindow1 = !empty($instance['newWindow1']) ? true : false;
+		$newWindow = !empty($instance['newWindow']) ? true : false;
+		echo $before_widget;
+		if ($newWindow) $newWindow = "target='_blank'";
+			if(!$hideTitle && $title) {
+				if($titleUrl) $title = "<a href='$titleUrl' $newWindow>$title<span class='more-i'></a>";
+			}
+		if ( ! empty( $title ) )
+		echo $before_title . $title . $after_title; 
+?>
+					<div class="fjgc_nav_bar">
+						<ul>
+							<li><a href="<?php echo $titleUrl;?>" target='_blank'>更多&gt;&gt;</a></li>
+<!-- 佛教视频子类目开始 -->	
+                            <?php
+				                 $cat=$instance['cat']	;
+				                 $cats = get_categories(array(
+				               	     'child_of' => $cat,
+					                 'parent' => $cat,
+					                 'hide_empty' => 0
+				                      )); 
+				                 foreach($cats as $the_cat){					 
+						          echo '<li><a href="'.get_category_link($the_cat).'">'.$the_cat->name.'</a></li>';			
+				                 }
+			                 ?>
+<!-- 佛教视频类目结束-->				                 
+						</ul>
+					</div>
+				</div>
+			</div>
+				<hr>
+				
+			</div>
+			<div class="shipin"  >
+<!-- 佛教视频列表开始 -->
+                 <ul>    
+					 <?php $list_num=array( 
+					    
+                         'showposts'=>8,
+                         'orderby'=>'guid','post_type' => 'video');
+                         query_posts($list_num);
+                     if (have_posts()){
+                             $nu=1;
+                     while (have_posts()) { the_post(); ?>					
+					    <li>
+					    	<div class="evl_sp">
+					 	         <div class="shipin_tupian">
+					                 <?php img_thumbnail()?></div>
+					 		     <div class="evl_spi"><a href="<?php the_permalink()?>"><?php the_title()?></a>
+					 	         </div>
+					 	    </div>    
+					     </li>
+                     <?php }}?>                    
+<!-- 佛教视频列表结束 -->		
+			     </ul>
+			</div>
+			<div class="zpyl_left_right evl_right">	
+			     <h3 class="" >
+                   <a class="redcolor ziti" href="<?php echo $titleUrl1;?>" target='_blank'><?php echo $title1;?></a>
+			     </h3>
+			     <hr/>	
+        	     <div class="zpyl_left_right_bottom">
+<!-- 佛教广播开始 -->
+					 <?php $list_num=array(  
+                         'showposts'=>$instance['numposts1'],
+                         'order'=>$instance['order1'],
+                         'cat' => $instance['cat1']);
+                         query_posts($list_num);
+                     if (have_posts()){
+                     while (have_posts()) { the_post(); ?>	
+                     <ul class="evl_right_ul"> 
+                     	<li class="evl_right_li"><a href="<?php the_permalink()?>"><?php the_title();?></a></li>
+                     </ul>
+                     <?php } }?>
+<!-- 佛教广播结束 -->                     
+			     </div>	
+			</div>								
+<?php
+	echo $after_widget;
+}
+
+function update( $new_instance, $old_instance ) {
+	if($new_instance['numposts']>8){$new_instance['numposts']=8;}else{}
+	if($new_instance['numposts1']>10){$new_instance['numposts1']=10;}else{}
+	$instance = $old_instance;
+	$instance = array();
+	$instance['title'] = strip_tags($new_instance['title']);
+	$instance['titleUrl'] = strip_tags($new_instance['titleUrl']);
+	$instance['hideTitle'] = isset($new_instance['hideTitle']);
+	$instance['newWindow'] = isset($new_instance['newWindow']);
+	$instance['numposts'] = $new_instance['numposts'];
+	$instance['cat'] = $new_instance['cat'];
+	$instance['order'] = $new_instance['order'];
+
+	$instance['title1'] = strip_tags($new_instance['title1']);
+	$instance['titleUrl1'] = strip_tags($new_instance['titleUrl1']);
+	$instance['newWindow1'] = isset($new_instance['newWindow1']);
+	$instance['numposts1'] = $new_instance['numposts1'];
+	$instance['cat1'] = $new_instance['cat1'];
+	$instance['order1'] = $new_instance['order1'];
+	return $instance;
+}
+
+function form( $instance ) {
+	$instance = wp_parse_args( (array) $instance, $defaults );
+	$instance = wp_parse_args( (array) $instance, array( 
+		'title' => '分类模块',	
+		'titleUrl' => '',		
+		'numposts' => 5,
+		'newWindow'=>'',
+	    'order'=>'',
+		'cat' => 0,
+
+		'title1' => '',
+		'titleUrl1' => '',
+		'newWindow1'=>'',
+		'numposts1' =>'',
+		'order1'=>'',
+		'cat1' =>'4'));
+		$titleUrl = $instance['titleUrl'];
+	    $titleUrl1 = $instance['titleUrl1'];
+		 ?> 
+        <p><strong>以下为左侧内容</strong></p>
+		<p>
+			<label for="<?php echo $this->get_field_id('title'); ?>">标题：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $instance['title']; ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('titleUrl'); ?>">标题链接：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('titleUrl'); ?>" name="<?php echo $this->get_field_name('titleUrl'); ?>" type="text" value="<?php echo $titleUrl; ?>" />
+		</p>
+		<p>
+			<input type="checkbox" id="<?php echo $this->get_field_id('newWindow'); ?>" name="<?php echo $this->get_field_name('newWindow'); ?>" <?php checked(isset($instance['newWindow']) ? $instance['newWindow'] : 0); ?> />
+			<label for="<?php echo $this->get_field_id('newWindow'); ?>">在新窗口打开标题链接</label>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('numposts'); ?>">显示视频数：</label> 
+			<input id="<?php echo $this->get_field_id('numposts'); ?>" name="<?php echo $this->get_field_name('numposts'); ?>" type="text" value="<?php echo $instance['numposts']; ?>" size="3" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('cat'); ?>">选择分类：
+			<?php wp_dropdown_categories(array('name' => $this->get_field_name('cat'), 'show_option_all' => 全部分类, 'hide_empty'=>0, 'hierarchical'=>1, 'selected'=>$instance['cat'])); ?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order'); ?>" name="<?php echo $this->get_field_name('order'); ?>" value="DESC" <?php if($instance['order']=="DESC"){ echo 'checked';} ?>   />
+			<label for="<?php echo $this->get_field_id('order'); ?>">降序 <?php echo $instance['order'];?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order'); ?>" name="<?php echo $this->get_field_name('order'); ?>" value="ASC"  <?php if($instance['order']=="ASC"){ echo 'checked';} ?>  />
+			<label for="<?php echo $this->get_field_id('order'); ?>">升序</label>		    
+	    </p>
+	    	    <br><hr><p><strong>以下为右侧内容</strong></p>
+		<p>
+			<label for="<?php echo $this->get_field_id('title1'); ?>">标题：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('title1'); ?>" name="<?php echo $this->get_field_name('title1'); ?>" type="text" value="<?php echo $instance['title1']; ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('titleUrl1'); ?>">标题链接：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('titleUrl1'); ?>" name="<?php echo $this->get_field_name('titleUrl1'); ?>" type="text" value="<?php echo $titleUrl1; ?>" />
+		</p>
+		<p>
+			<input type="checkbox" id="<?php echo $this->get_field_id('newWindow1'); ?>" name="<?php echo $this->get_field_name('newWindow1'); ?>" <?php checked(isset($instance['newWindow1']) ? $instance['newWindow1'] : 0); ?> />
+			<label for="<?php echo $this->get_field_id('newWindow1'); ?>">在新窗口打开标题链接</label>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('numposts1'); ?>">显示篇数(最多10篇)：</label> 
+			<input id="<?php echo $this->get_field_id('numposts1'); ?>" name="<?php echo $this->get_field_name('numposts1'); ?>" type="text" value="<?php echo $instance['numposts1']; ?>" size="3" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('cat1'); ?>">选择分类：
+			<?php wp_dropdown_categories(array('name' => $this->get_field_name('cat1'), 'show_option_all' => 全部分类, 'hide_empty'=>0, 'hierarchical'=>1, 'selected'=>$instance['cat1'])); ?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order1'); ?>" name="<?php echo $this->get_field_name('order1'); ?>" value="DESC" <?php if($instance['order1']=="DESC"){ echo 'checked';} ?>   />
+			<label for="<?php echo $this->get_field_id('order1'); ?>">降序 <?php echo $instance['order1'];?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order1'); ?>" name="<?php echo $this->get_field_name('order1'); ?>" value="ASC"  <?php if($instance['order1']=="ASC"){ echo 'checked';} ?>  />
+			<label for="<?php echo $this->get_field_id('order1'); ?>">升序</label>	
+		</p>
+
+<?php }
+}
+add_action( 'widgets_init', create_function( '', 'register_widget( "sb_seven" );' ) );
+
+
+
+
+//第八屏
+class sb_eight extends WP_Widget {
+	public function __construct() {
+		$widget_ops = array(
+			'classname' => 'sb_eight',
+			'description' => __( '显示第八屏内容' ),
+			'customize_selective_refresh' => true,
+		);
+		parent::__construct('sb_eight', '第八屏', $widget_ops);
+	}
+
+	function widget( $args, $instance ) {
+		extract( $args );
+		$instance = wp_parse_args( (array) $instance, $defaults );
+		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title'], $instance);
+		$titleUrl = empty($instance['titleUrl']) ? '' : $instance['titleUrl'];
+		$newWindow = !empty($instance['newWindow']) ? true : false;
+
+		$title1 = empty($instance['title1']) ? '' : $instance['title1'];
+		$titleUrl1 = empty($instance['titleUrl1']) ? '' : $instance['titleUrl1'];
+		$newWindow1 = !empty($instance['newWindow1']) ? true : false;		
+		echo $before_widget;
+		if ($newWindow) $newWindow = "target='_blank'";
+			if(!$hideTitle && $title) {
+				if($titleUrl) $title = "<a href='$titleUrl' $newWindow>$title<span class='more-i'></a>";
+			}
+		if ( ! empty( $title ) )
+		echo $before_title . $title . $after_title; 
+?>
+        	
+					<div class="fjgc_nav_bar">
+						<ul>
+							<li><a href="<?php echo $titleUrl;?>" target='_blank'>更多&gt;&gt;</a></li>
+<!-- 放生子类目开始 -->	
+                            <?php
+				                 $cat=$instance['cat'];
+				                 $cats = get_categories(array(
+				               	     'child_of' => $cat,
+					                 'parent' => $cat,
+					                 'hide_empty' => 0
+				                      )); 
+				                 foreach($cats as $the_cat){					 
+						          echo '<li><a href="'.get_category_link($the_cat).'">'.$the_cat->name.'</a></li>';			
+				                 }
+			                 ?>
+<!-- 放生类目结束-->				                 
+						</ul>
+					</div>
+				</div>
+			</div>
+				<hr>
+                <div class="fs_ss_bottom fs_gg">
+<!-- 放生列表开始 -->	                	
+                	  <?php 
+                	  $list_num=array(  
+                         'showposts'=>$instance['numposts'],
+                         'order'=>$instance['order'],
+                         'cat' => $instance['cat']);
+                         query_posts($list_num);
+                         $nu=1;
+                     if (have_posts()){
+                     while (have_posts()) { the_post(); 
+                     	if($nu==1||$nu==2){?>
+                             <div class="fs_ss_tupian"><?php img_thumbnail()?> 
+                                    <div class="fs_ss_title"> <a  href="<?php the_permalink()?>"><?php the_title()?></a></div>
+                             </div>
+                         <?php }else{ if($nu==3){?>
+                              <ul class="fs_ss_list"><?php }?>
+                             	 <li>
+                             		<a href="<?php the_permalink()?>"><?php the_title()?></a>
+                                </li>                             
+                     
+                     <?php }if($nu==14){?></ul><?php }else if($nu==$instance['numposts']){?></ul>
+
+                     <?php }else{}++$nu; }}?>
+<!-- 放生列表结束 -->	                         
+                </div>
+        	</div>
+        	<div class="ss eight_right">
+        			<div class="left_title">
+					<div class="fjgc_icon">
+						<img class="ei_ri_img" src="./wp-content/themes/begin/img/fjw/icon.jpg">
+						<span class="ei_span"><a class="redcolor ziti" href="<?php echo $titleUrl1;?>" target='_blank'><?php echo $title1;?></a></span>
+					</div>
+					<div class="fjgc_nav_bar">
+						<ul>
+							<li><a href="<?php echo $titleUrl1;?>" target='_blank'>更多&gt;&gt;</a></li>
+<!--  素食子类目开始 -->	
+                            <?php
+				                 $cat=$instance['cat1'];
+				                 $cats = get_categories(array(
+				               	     'child_of' => $cat,
+					                 'parent' => $cat,
+									 
+					                 'hide_empty' => 0
+				                      )); 
+				                 foreach($cats as $the_cat){					 
+						          echo '<li><a href="'.get_category_link($the_cat).'">'.$the_cat->name.'</a></li>';			
+				                 }
+			                 ?>
+<!-- 素食类目结束-->				                 
+						</ul>
+					</div>
+				</div>
+				<hr>
+         		<div class="fs_ss_bottom sushi">
+<!-- 素食列表开始 -->	    
+                	  <?php $list_num=array(  
+                         'showposts'=>$instance['numposts1'],
+                         'order'=>$instance['order1'],
+                         'cat' => $instance['cat1']);
+                         query_posts($list_num);
+                         $nu=1;
+                     if (have_posts()){
+                     while (have_posts()) { the_post(); 
+                     	if($nu==1||$nu==2){?>
+                             <div class="fs_ss_tupian"><?php img_thumbnail()?> 
+                                    <div class="fs_ss_title"> <a  href="<?php the_permalink()?>"><?php the_title()?></a></div>
+                             </div>
+                         <?php }else{ if($nu==3){?>
+                              <ul class="fs_ss_list"><?php }?>
+                             	 <li>
+                             		<a href="<?php the_permalink()?>"><?php the_title()?></a>
+                                </li>                             
+	                     <?php }if($nu==14){?></ul><?php }else if($nu==$instance['numposts']){?></ul>
+
+                     <?php }else{}++$nu; }}?>
+ <!-- 素食列表结束 -->	                                			
+         		</div>
+        	</div>							
+<?php
+	echo $after_widget;
+}
+
+function update( $new_instance, $old_instance ) {
+	if($new_instance['numposts']>14){$new_instance['numposts']=14;}else{}
+	if($new_instance['numposts1']>14){$new_instance['numposts1']=14;}else{}
+	$instance = $old_instance;
+	$instance = array();
+	$instance['cat'] = $new_instance['cat'];
+	$instance['title'] = strip_tags($new_instance['title']);
+	$instance['titleUrl'] = strip_tags($new_instance['titleUrl']);
+	$instance['hideTitle'] = isset($new_instance['hideTitle']);
+	$instance['newWindow'] = isset($new_instance['newWindow']);
+	$instance['order'] = strip_tags($new_instance['order']);
+	$instance['numposts'] = strip_tags($new_instance['numposts']);
+
+	$instance['cat1'] = $new_instance['cat1'];
+	$instance['title1'] = strip_tags($new_instance['title1']);
+	$instance['titleUrl1'] = strip_tags($new_instance['titleUrl1']);
+	$instance['order1'] = strip_tags($new_instance['order1']);	
+	$instance['newWindow1'] = isset($new_instance['newWindow1']);	
+	$instance['numposts1'] = strip_tags($new_instance['numposts1']);
+	return $instance;
+}
+
+function form( $instance ) {
+	$instance = wp_parse_args( (array) $instance, $defaults );
+	$instance = wp_parse_args( (array) $instance, array( 
+		'title' => '分类模块',
+		'title1' => '分类模块',
+		'titleUrl' => '',
+		'titleUrl1' => '',
+		'numposts' => '',
+		'numposts1' => '',
+	    'newWindow'=>'',
+	    'newWindow1'=>'',
+	    'order'=>'',
+	    'order1'=>'',
+	    'cat1'=>0,
+		'cat' => 0));
+		$titleUrl = $instance['titleUrl'];
+	    $titleUrl1 = $instance['titleUrl1'];
+		 ?> 
+
+		<p><strong>以下为左侧内容</strong></p>
+		<p>
+			<label for="<?php echo $this->get_field_id('title'); ?>">标题：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $instance['title']; ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('titleUrl'); ?>">标题链接：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('titleUrl'); ?>" name="<?php echo $this->get_field_name('titleUrl'); ?>" type="text" value="<?php echo $titleUrl; ?>" />
+		</p>
+		<p>
+			<input type="checkbox" id="<?php echo $this->get_field_id('newWindow'); ?>" name="<?php echo $this->get_field_name('newWindow'); ?>" <?php checked(isset($instance['newWindow']) ? $instance['newWindow'] : 0); ?> />
+			<label for="<?php echo $this->get_field_id('newWindow'); ?>">在新窗口打开标题链接</label>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('numposts'); ?>">显示篇数(最多14篇)：</label> 
+			<input id="<?php echo $this->get_field_id('numposts'); ?>" name="<?php echo $this->get_field_name('numposts'); ?>" type="text" value="<?php echo $instance['numposts']; ?>" size="3" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('cat'); ?>">左边内容选择分类：
+			<?php wp_dropdown_categories(array('name' => $this->get_field_name('cat'), 'show_option_all' => 全部分类, 'hide_empty'=>0, 'hierarchical'=>1, 'selected'=>$instance['cat'])); ?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order'); ?>" name="<?php echo $this->get_field_name('order'); ?>" value="DESC" <?php if($instance['order']=="DESC"){ echo 'checked';} ?>   />
+			<label for="<?php echo $this->get_field_id('order'); ?>">降序 <?php echo $instance['order'];?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order'); ?>" name="<?php echo $this->get_field_name('order'); ?>" value="ASC"  <?php if($instance['order']=="ASC"){ echo 'checked';} ?>  />
+			<label for="<?php echo $this->get_field_id('order'); ?>">升序</label>		    
+	    </p>
+	    	    <br><hr><p><strong>以下为右侧内容</strong></p>
+		<p>
+			<label for="<?php echo $this->get_field_id('title1'); ?>">标题：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('title1'); ?>" name="<?php echo $this->get_field_name('title1'); ?>" type="text" value="<?php echo $instance['title1']; ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('titleUrl1'); ?>">标题链接：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('titleUrl1'); ?>" name="<?php echo $this->get_field_name('titleUrl1'); ?>" type="text" value="<?php echo $titleUrl1; ?>" />
+		</p>
+		<p>
+			<input type="checkbox" id="<?php echo $this->get_field_id('newWindow1'); ?>" name="<?php echo $this->get_field_name('newWindow1'); ?>" <?php checked(isset($instance['newWindow1']) ? $instance['newWindow1'] : 0); ?> />
+			<label for="<?php echo $this->get_field_id('newWindow1'); ?>">在新窗口打开标题链接</label>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('numposts1'); ?>">显示篇数(最多14篇)：</label> 
+			<input id="<?php echo $this->get_field_id('numposts1'); ?>" name="<?php echo $this->get_field_name('numposts1'); ?>" type="text" value="<?php echo $instance['numposts1']; ?>" size="3" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('cat1'); ?>">选择分类：
+			<?php wp_dropdown_categories(array('name' => $this->get_field_name('cat1'), 'show_option_all' => 全部分类, 'hide_empty'=>0, 'hierarchical'=>1, 'selected'=>$instance['cat1'])); ?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order1'); ?>" name="<?php echo $this->get_field_name('order1'); ?>" value="DESC" <?php if($instance['order1']=="DESC"){ echo 'checked';} ?>   />
+			<label for="<?php echo $this->get_field_id('order1'); ?>">降序 <?php echo $instance['order1'];?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order1'); ?>" name="<?php echo $this->get_field_name('order1'); ?>" value="ASC"  <?php if($instance['order1']=="ASC"){ echo 'checked';} ?>  />
+			<label for="<?php echo $this->get_field_id('order1'); ?>">升序</label>	
+		</p>
+
+<?php }
+}
+add_action( 'widgets_init', create_function( '', 'register_widget( "sb_eight" );' ) );
+
+
+
+//第九屏
+class sb_nine extends WP_Widget {
+	public function __construct() {
+		$widget_ops = array(
+			'classname' => 'sb_nine',
+			'description' => __( '显示第九屏内容' ),
+			'customize_selective_refresh' => true,
+		);
+		parent::__construct('sb_nine', '第九屏', $widget_ops);
+	}
+
+	function widget( $args, $instance ) {
+		extract( $args );
+		$instance = wp_parse_args( (array) $instance, $defaults );
+		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title'], $instance);
+		$titleUrl = empty($instance['titleUrl']) ? '' : $instance['titleUrl'];
+		$newWindow = !empty($instance['newWindow']) ? true : false;
+		echo $before_widget;
+		if ($newWindow) $newWindow = "target='_blank'";
+			if(!$hideTitle && $title) {
+				if($titleUrl) $title = "<a href='$titleUrl' $newWindow>$title<span class='more-i'></a>";
+			}
+		if ( ! empty( $title ) )
+		echo $before_title . $title . $after_title; 
+?>
+  
+
+					<div class="dade">
+						<ul>
+							
+<!--  大德开示子类目开始 -->	
+                            <?php
+				                 $cat=$instance['cat'];
+				                 $cats = get_categories(array(
+				               	     'child_of' => $cat,
+					                 'parent' => $cat,
+					                 'hide_empty' => 0
+				                      )); 
+				                 foreach($cats as $the_cat){					 
+						          echo '<li><a href="'.get_category_link($the_cat).'">'.$the_cat->name.'</a></li>';			
+				                 }
+			                 ?>
+<!-- 大德开示类目结束-->	<li><a href="<?php echo $titleUrl;?>" target='_blank'>更多&gt;&gt;</a></li>			                 
+						</ul>
+					</div>
+				</div>
+				<hr>
+         		<div class="fjwd_content">
+<!-- 大德开示列表开始 -->	    
+                      <div class="fjwd_content_left ma">
+                	     <?php 
+                	     if($instance['numposts']>5){$num1=5;}else{$num1=$instance['numposts'];}
+                	     $list_num=array(  
+                             'showposts'=>$num1,
+                             'order'=>$instance['order'],
+                             'cat' => $instance['cat']);
+                             query_posts($list_num);
+                             $nu=1;
+                             if (have_posts()){
+                                 while (have_posts()) { the_post(); 
+                     	             if($nu==1){?>
+                                         <div class="fjwd_top botop">                                      	
+                                            <div class="fjwd_title boti"> <a  href="<?php the_permalink()?>"><?php the_title()?></a></div>
+                                            <?php img_thumbnail()?> 
+                                             <div class="fjwd_content boli"><?php the_excerpt()?></div>
+                                         </div>
+                                         <hr>
+                                     <?php }else{ if($nu==2){?>
+                                          <ul class="fjwd_list"><?php }?>
+                             	             <li>
+
+                             		             <a href="<?php the_permalink()?>"><?php the_title()?></a>
+
+                             		             <span class="fjc_sp"><?php the_time('m-d')?></span>
+                                             </li>                             
+                                 
+                                         <?php }if($nu==6){?></ul><?php }else if($nu==$instance['numposts']){?></ul><?php }else{} ++$nu;}}?>
+                      </div>
+
+                      <div class="fjwd_content_right">
+                      	    <?php
+                             if($instance['order']=="DESC"){$instance['order']="ASC";}else{$instance['order']="DESC";}
+                          if($instance['numposts']>5){$num2=$instance['numposts']-5;}else{$num2=0;$instance['cat']=1011111111;}
+                             $list_num=array(  
+                             'showposts'=>$num2,
+                             'order'=>$instance['order'],
+                             'cat' => $instance['cat']);
+                             query_posts($list_num);
+                             $nu=1;
+                             if (have_posts()){
+                                 while (have_posts()) { the_post(); 
+                     	             if($nu==1){?>
+                                         <div class="fjwd_top botop">                                      	
+                                            <div class="fjwd_title boti"> <a  href="<?php the_permalink()?>"><?php the_title()?></a></div>
+                                            <?php img_thumbnail()?> 
+                                             <div class="fjwd_content boli"><?php the_excerpt()?></div>
+                                         </div>
+                                         <hr>
+                                     <?php }else{ if($nu==2){?>
+                                          <ul class="fjwd_list" ><?php }?>
+                             	             <li>
+                             		             <a class="list1" href="<?php the_permalink()?>"><?php the_title()?></a>
+                             		             <span class="fjc_sp"><?php the_time('m-d')?></span>
+                                             </li>                             
+                                          <?php }if($nu==6){?></ul><?php }else if($nu==$instance['numposts']){?></ul><?php }else{} ++$nu;}}?>
+                      </div>
+ <!-- 大德开示列表结束 -->	                                			
+         		</div>        	
+
+
+<?php
+	echo $after_widget;
+}
+
+function update( $new_instance, $old_instance ) {
+	if($new_instance['numposts']>10){$new_instance['numposts']=10;}else{}
+	$instance = $old_instance;
+	$instance = array();
+	$instance['title'] = strip_tags($new_instance['title']);
+	$instance['titleUrl'] = strip_tags($new_instance['titleUrl']);
+	$instance['hideTitle'] = isset($new_instance['hideTitle']);
+	$instance['newWindow'] = isset($new_instance['newWindow']);
+	$instance['numposts'] = $new_instance['numposts'];
+	$instance['order']=$new_instance['order'];
+	$instance['cat'] = $new_instance['cat'];
+	return $instance;
+}
+
+function form( $instance ) {
+	$instance = wp_parse_args( (array) $instance, $defaults );
+	$instance = wp_parse_args( (array) $instance, array( 
+		'title' => '分类模块',
+		'newWindow'=>'',		
+		'titleUrl' => '',	
+		'numposts' => 5,
+		'order'=>'',
+		'cat' => 0));
+		$titleUrl = $instance['titleUrl'];
+	
+		 ?> 
+		<p>
+			<label for="<?php echo $this->get_field_id('title'); ?>">标题：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $instance['title']; ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('titleUrl'); ?>">标题链接：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('titleUrl'); ?>" name="<?php echo $this->get_field_name('titleUrl'); ?>" type="text" value="<?php echo $titleUrl; ?>" />
+		</p>
+		<p>
+			<input type="checkbox" id="<?php echo $this->get_field_id('newWindow'); ?>" name="<?php echo $this->get_field_name('newWindow'); ?>" <?php checked(isset($instance['newWindow']) ? $instance['newWindow'] : 0); ?> />
+			<label for="<?php echo $this->get_field_id('newWindow'); ?>">在新窗口打开标题链接</label>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('numposts'); ?>">显示篇数(最多10篇)：</label> 
+			<input id="<?php echo $this->get_field_id('numposts'); ?>" name="<?php echo $this->get_field_name('numposts'); ?>" type="text" value="<?php echo $instance['numposts']; ?>" size="3" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('cat'); ?>">选择分类：
+			<?php wp_dropdown_categories(array('name' => $this->get_field_name('cat'), 'show_option_all' => 全部分类, 'hide_empty'=>0, 'hierarchical'=>1, 'selected'=>$instance['cat'])); ?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order'); ?>" name="<?php echo $this->get_field_name('order'); ?>" value="DESC" <?php if($instance['order']=="DESC"){ echo 'checked';} ?>   />
+			<label for="<?php echo $this->get_field_id('order'); ?>">降序 <?php echo $instance['order'];?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order'); ?>" name="<?php echo $this->get_field_name('order'); ?>" value="ASC"  <?php if($instance['order']=="ASC"){ echo 'checked';} ?>  />
+			<label for="<?php echo $this->get_field_id('order'); ?>">升序</label>		    
+	    </p>
+
+
+<?php }
+}
+add_action( 'widgets_init', create_function( '', 'register_widget( "sb_nine" );' ) );
+
+
+
+
+//第十屏
+class sb_ten extends WP_Widget {
+	public function __construct() {
+		$widget_ops = array(
+			'classname' => 'sb_ten',
+			'description' => __( '显示第十屏内容' ),
+			'customize_selective_refresh' => true,
+		);
+		parent::__construct('sb_ten', '第十屏', $widget_ops);
+	}
+
+	function widget( $args, $instance ) {
+		extract( $args );
+		$instance = wp_parse_args( (array) $instance, $defaults );
+		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title'], $instance);
+		$titleUrl = empty($instance['titleUrl']) ? '' : $instance['titleUrl'];
+		$title1 =  empty($instance['title1']) ? '' : $instance['title1'];
+		$titleUrl1 = empty($instance['titleUrl1']) ? '' : $instance['titleUrl1'];
+		$newWindow1 = !empty($instance['newWindow1']) ? true : false;
+		$newWindow = !empty($instance['newWindow']) ? true : false;
+		echo $before_widget;
+		if ($newWindow) $newWindow = "target='_blank'";
+			if(!$hideTitle && $title) {
+				if($titleUrl) $title = "<a href='$titleUrl' $newWindow>$title<span class='more-i'></a>";
+			}
+		if ( ! empty( $title ) )
+		echo $before_title . $title . $after_title; 
+?>
+					<div class="fjgc_nav_bar">
+						<ul>
+							<li><a href="<?php echo $titleUrl;?>" target='_blank'>更多&gt;&gt;</a></li>
+<!-- 感应事迹子类目开始 -->	
+                            <?php
+				                 $cat=$instance['cat']	;
+				                 $cats = get_categories(array(
+				               	     'child_of' => $cat,
+					                 'parent' => $cat,
+					                 'hide_empty' => 0
+				                      )); 
+				                 foreach($cats as $the_cat){					 
+						          echo '<li><a href="'.get_category_link($the_cat).'">'.$the_cat->name.'</a></li>';			
+				                 }
+			                 ?>
+<!-- 感应事迹类目结束-->				                 
+						</ul>
+					</div>
+				</div>
+				<hr>
+				
+			</div>
+			<div class="shipin" >
+<!-- 感应事迹列表开始 -->
+                 <ul class="ten_ul">    
+					 <?php $list_num=array(  
+                         'showposts'=>$instance['numposts'],
+                         'order'=>$instance['order'],
+                         'cat' => $instance['cat']);
+                         query_posts($list_num);
+                     if (have_posts()){
+                             $nu=1;
+                     while (have_posts()) { the_post(); ?>					
+					    <li >
+					    	<div class="nb_d">
+					 	         <div class="shipin_tupian">
+					                 <?php img_thumbnail()?></div>
+					 		     <div class="nb_d1"><a  href="<?php the_permalink()?>"><?php the_title()?></a>
+					 	         </div>
+					 	    </div>    
+					     </li>
+                     <?php }}?>                    
+<!-- 感应事迹列表结束 -->		
+			     </ul>
+			</div>
+			<div class="zpyl_left_right nb_right">	
+			     <h3 class="zpyl_left_right_top" >
+                   <a class="redcolor ziti" href="<?php echo $titleUrl1;?>" target='_blank'><?php echo $title1;?></a>
+			     </h3>
+			     <hr/>	
+        	     <div>
+<!-- 明信因果开始 -->
+					 <?php $list_num=array(  
+                         'showposts'=>$instance['numposts1'],
+                         'order'=>$instance['order1'],
+                         'cat' => $instance['cat1']);
+                         query_posts($list_num);
+                     if (have_posts()){
+                     	$nu=1;
+                     while (have_posts()) { the_post(); if($nu==1||$nu==14){?>	
+                     <ul <?php if($nu==1){?>class="list_le"<?php }else{?>class="list_ri" <?php }?>> 
+                          <?php }?>
+                     	<li class="nb_li"><a href="<?php the_permalink()?>"><?php the_title();?></a></li>
+                     	<?php if($nu==13||$nu==26){?>
+                     </ul><?php }else if($nu==$instance['numposts1']){?>
+                     </ul>
+                     <?php }else{} ++$nu;} }?>
+<!-- 明信因果结束 -->                     
+			     </div>	
+			</div>
+<?php
+	echo $after_widget;
+}
+
+function update( $new_instance, $old_instance ) {
+	$instance = $old_instance;
+	$instance = array();
+	$instance['title'] = strip_tags($new_instance['title']);
+	$instance['titleUrl'] = strip_tags($new_instance['titleUrl']);
+	$instance['hideTitle'] = isset($new_instance['hideTitle']);
+	$instance['newWindow'] = isset($new_instance['newWindow']);
+	$instance['numposts'] = $new_instance['numposts'];
+	$instance['cat'] = $new_instance['cat'];
+	$instance['order'] = $new_instance['order'];
+
+	$instance['title1'] = strip_tags($new_instance['title1']);
+	$instance['titleUrl1'] = strip_tags($new_instance['titleUrl1']);
+	$instance['newWindow1'] = isset($new_instance['newWindow1']);
+	$instance['numposts1'] = $new_instance['numposts1'];
+	$instance['cat1'] = $new_instance['cat1'];
+	$instance['order1'] = $new_instance['order1'];
+	return $instance;
+}
+
+function form( $instance ) {
+	$instance = wp_parse_args( (array) $instance, $defaults );
+	$instance = wp_parse_args( (array) $instance, array( 
+		'title' => '分类模块',	
+		'titleUrl' => '',	
+		'numposts' => 5,
+		'newWindow'=>'',
+		'cat' => 0,
+		'order'=>'',
+		'title1' => '',
+		'titleUrl1' => '',
+		'newWindow1'=>'',
+		'numposts1' => 4,
+		'order1'=>'',
+		'cat1' =>'22'));
+		$titleUrl = $instance['titleUrl'];
+	    $titleUrl1 = $instance['titleUrl1'];
+		 ?> 
+
+       <p><strong>以下为左侧内容</strong></p>
+		<p>
+			<label for="<?php echo $this->get_field_id('title'); ?>">标题：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $instance['title']; ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('titleUrl'); ?>">标题链接：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('titleUrl'); ?>" name="<?php echo $this->get_field_name('titleUrl'); ?>" type="text" value="<?php echo $titleUrl; ?>" />
+		</p>
+		<p>
+			<input type="checkbox" id="<?php echo $this->get_field_id('newWindow'); ?>" name="<?php echo $this->get_field_name('newWindow'); ?>" <?php checked(isset($instance['newWindow']) ? $instance['newWindow'] : 0); ?> />
+			<label for="<?php echo $this->get_field_id('newWindow'); ?>">在新窗口打开标题链接</label>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('numposts'); ?>">显示篇数(最多8篇)：</label> 
+			<input id="<?php echo $this->get_field_id('numposts'); ?>" name="<?php echo $this->get_field_name('numposts'); ?>" type="text" value="<?php echo $instance['numposts']; ?>" size="3" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('cat'); ?>">选择分类：
+			<?php wp_dropdown_categories(array('name' => $this->get_field_name('cat'), 'show_option_all' => 全部分类, 'hide_empty'=>0, 'hierarchical'=>1, 'selected'=>$instance['cat'])); ?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order'); ?>" name="<?php echo $this->get_field_name('order'); ?>" value="DESC" <?php if($instance['order']=="DESC"){ echo 'checked';} ?>   />
+			<label for="<?php echo $this->get_field_id('order'); ?>">降序 <?php echo $instance['order'];?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order'); ?>" name="<?php echo $this->get_field_name('order'); ?>" value="ASC"  <?php if($instance['order']=="ASC"){ echo 'checked';} ?>  />
+			<label for="<?php echo $this->get_field_id('order'); ?>">升序</label>		    
+	    </p>
+	    	    <br><hr><p><strong>以下为右侧内容</strong></p>
+		<p>
+			<label for="<?php echo $this->get_field_id('title1'); ?>">标题：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('title1'); ?>" name="<?php echo $this->get_field_name('title1'); ?>" type="text" value="<?php echo $instance['title1']; ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('titleUrl1'); ?>">标题链接：</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('titleUrl1'); ?>" name="<?php echo $this->get_field_name('titleUrl1'); ?>" type="text" value="<?php echo $titleUrl1; ?>" />
+		</p>
+		<p>
+			<input type="checkbox" id="<?php echo $this->get_field_id('newWindow1'); ?>" name="<?php echo $this->get_field_name('newWindow1'); ?>" <?php checked(isset($instance['newWindow1']) ? $instance['newWindow1'] : 0); ?> />
+			<label for="<?php echo $this->get_field_id('newWindow1'); ?>">在新窗口打开标题链接</label>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('numposts1'); ?>">显示篇数(最多26篇)：</label> 
+			<input id="<?php echo $this->get_field_id('numposts1'); ?>" name="<?php echo $this->get_field_name('numposts1'); ?>" type="text" value="<?php echo $instance['numposts1']; ?>" size="3" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('cat1'); ?>">选择分类：
+			<?php wp_dropdown_categories(array('name' => $this->get_field_name('cat1'), 'show_option_all' => 全部分类, 'hide_empty'=>0, 'hierarchical'=>1, 'selected'=>$instance['cat1'])); ?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order1'); ?>" name="<?php echo $this->get_field_name('order1'); ?>" value="DESC" <?php if($instance['order1']=="DESC"){ echo 'checked';} ?>   />
+			<label for="<?php echo $this->get_field_id('order1'); ?>">降序 <?php echo $instance['order1'];?></label>
+		</p>
+		<p>
+			<input type="radio" id="<?php echo $this->get_field_id('order1'); ?>" name="<?php echo $this->get_field_name('order1'); ?>" value="ASC"  <?php if($instance['order1']=="ASC"){ echo 'checked';} ?>  />
+			<label for="<?php echo $this->get_field_id('order1'); ?>">升序</label>	
+		</p>
+
+
+<?php }
+}
+add_action( 'widgets_init', create_function( '', 'register_widget( "sb_ten" );' ) );
